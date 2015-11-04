@@ -91,7 +91,7 @@ public class loginactivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
+        mLoginFormView = findViewById(R.id.loginactivity);
         mProgressView = findViewById(R.id.login_progress);
     }
 
