@@ -11,9 +11,12 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+
+    <!-- Strings related to master menu list -->
     <string name="title_menuitem_list">MenuItems</string>
     <string name="title_menuitem_detail">MenuItem Detail</string>
+
+    <!-- Strings related to master restaurant list -->
+    <string name="title_restaurantitem_list">RestaurantItems</string>
+    <string name="title_restaurantitem_detail">RestaurantItem Detail</string>
 </resources>
