@@ -19,10 +19,15 @@
 
 <br /> 
 
-### 3. Launch:
+### 2. Launch:
 ```sh
   $ node app.js
 ```
+
+### 3. RESOURCES
+##### Some HTTP result codes. 
+
+  - [Node.js and MEAN stack](https://www.mongodb.com/blog/post/building-your-first-application-mongodb-creating-rest-api-using-mean-stack-part-1?jmp=docs&_ga=1.41398059.864639056.1446152580)
 
 ##### Some HTTP result codes. 
 
