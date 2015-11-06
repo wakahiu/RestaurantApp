@@ -1,0 +1,39 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Restaurant Application. Server side.",
+  "main": "app.js",
+  "private": true,
+  "dependencies": {
+    "express": "4.9.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/wakahiu/RestaurantApp.git"
+  },
+  "keywords": [
+    "cloud",
+    "mobile",
+    "webapp"
+  ],
+  "author": "Qiancheng Wang (David)",
+  "email": "qw2181@columbia.edu ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wakahiu/RestaurantApp/issues"
+  },
+  "contributors": [
+    {
+      "name": "Peter Wakahiu Njenga",
+      "email": "pwn2107@columbia.edu"
+    },
+    {
+      "name": "Doo Young Park (Paul)",
+      "email": "dp2737@columbia.edu"
+    }
+  ],
+  "homepage": "https://github.com/wakahiu/RestaurantApp#readme"
+}
