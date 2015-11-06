@@ -25,11 +25,11 @@
 ```
 
 ### 3. RESOURCES
-##### Some HTTP result codes. 
+##### 1. Tutorials
 
-  - [Node.js and MEAN stack](https://www.mongodb.com/blog/post/building-your-first-application-mongodb-creating-rest-api-using-mean-stack-part-1?jmp=docs&_ga=1.41398059.864639056.1446152580)
+  - <a href="https://www.mongodb.com/blog/post/building-your-first-application-mongodb-creating-rest-api-using-mean-stack-part-1?jmp=docs&_ga=1.41398059.864639056.1446152580" target="_blank">Node.js and MEAN stack</a>
 
-##### Some HTTP result codes. 
+##### 2. Some HTTP result codes. 
 
   - 200 - “OK”.
   - 201 - “Created” (Used with POST).
