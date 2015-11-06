@@ -7,14 +7,14 @@
 ### 1. INSTALLING DEPENDENCIES
 ##### Dependencies (see package.json for versions):
   - express
+  - body-parser
+  - cookie-parser
+  - multer
 
 ##### Dependencies Installation:
 ```sh
   $ npm install
 ```
-
-<br /> 
-
 
 <br /> 
 
