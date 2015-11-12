@@ -40,17 +40,23 @@ Users need to be able to do the following:
   - See the menu items.
   - Place an order.
   - Recieve a bill and pay.
-Additionally, a users should be able to reset their password.
+
+Additionally, users should be able to reset their password.
 
 ###### Waiters
   - Create an account.
   - See tables
   - Bill a table or individual
   - Receive payment
-  
+
 Additionally, a users should be able to reset their password.
 
 The following table shows how these operations can be mapped to HTTP routes and verbs.
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
 
 ##### 3. Some HTTP result codes. 
 
