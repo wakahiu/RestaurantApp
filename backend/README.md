@@ -54,9 +54,10 @@ Additionally, a users should be able to reset their password.
 The following table shows how these operations can be mapped to HTTP routes and verbs.
 
 | Route | Verb | Description | Variables |
-| ------------- | ------------- | ------------- | ------------- |
+| :------------- |:-------------:| :------------- | :------------- |
 | /patron/enroll  | POST | Register a new patron | firstName <br />  lastName <br /> email <br /> password
-| Content Cell  | Content Cell  |
+| /staff/enroll  | POST | Register a new wait staff | firstName <br />  lastName <br /> email <br /> password
+| /restuaruant/enroll  | POST | Register a new restuaruant | Name <br />  Address
 
 ##### 3. Some HTTP result codes. 
 
