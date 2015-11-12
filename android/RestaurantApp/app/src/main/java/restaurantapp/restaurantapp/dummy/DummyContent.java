@@ -23,22 +23,15 @@ public class DummyContent {
      */
     public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
-    private static final int COUNT = 25;
-
     static {
-        // Add some sample items.
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
-        }
+        addItem(new DummyItem("1","New York","detail"));
+        addItem(new DummyItem("2","Los Angeles","detail"));
+        addItem(new DummyItem("3","Hong Kong","detail"));
     }
 
     private static void addItem(DummyItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
-    }
-
-    private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
@@ -55,18 +48,18 @@ public class DummyContent {
      */
     public static class DummyItem {
         public String id;
-        public String content;
+        public String city_name;
         public String details;
 
-        public DummyItem(String id, String content, String details) {
+        public DummyItem(String id, String city_name, String details) {
             this.id = id;
-            this.content = content;
+            this.city_name = city_name;
             this.details = details;
         }
 
         @Override
         public String toString() {
-            return content;
+            return city_name;
         }
     }
 }

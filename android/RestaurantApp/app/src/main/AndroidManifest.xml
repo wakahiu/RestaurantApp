@@ -5,7 +5,7 @@
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".registeractivity"
+            android:label="registermode">
+        </activity>
+        <activity
             android:name=".MenuItemListActivity"
             android:label="@string/title_menuitem_list"
             android:theme="@style/AppTheme" >
@@ -35,6 +39,20 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="restaurantapp.restaurantapp.MenuItemListActivity" />
+        </activity>
+        <activity
+            android:name=".RestaurantItemListActivity"
+            android:label="@string/title_restaurantitem_list"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".RestaurantItemDetailActivity"
+            android:label="@string/title_restaurantitem_detail"
+            android:parentActivityName=".RestaurantItemListActivity"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="restaurantapp.restaurantapp.RestaurantItemListActivity" />
         </activity>
     </application>
 

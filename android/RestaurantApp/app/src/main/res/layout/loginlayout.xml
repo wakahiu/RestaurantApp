@@ -10,95 +10,83 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".loginactivity">
 
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/email_login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/loginpagetitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Diner Mate"
+            android:textSize="63sp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/email_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="25sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="25sp" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
-            android:id="@+id/email_login_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="2"
             android:orientation="vertical"
-            android:weightSum="5">
+            android:weightSum="12">
 
-            <TextView
-                android:layout_marginTop="50dp"
-                android:id="@+id/loginpagetitle"
+            <Button
+                android:id="@+id/log_in_button"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="4"
+                android:text="@string/action_sign_in"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/register"
                 android:layout_width="match_parent"
-                android:layout_weight="2"
-                android:text="Diner Mate"
-                android:textSize="63sp"
-                android:gravity="center"/>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:textSize="25sp"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:textSize="25sp"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="2"
-                android:weightSum="12"
-                android:orientation="vertical">
-
-                <Button
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/email_sign_in_button"
-                    android:layout_height="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_weight="4"
-
-                    android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/register"
-                    android:layout_height="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_weight="4"
-                    android:text="@string/action_register" />
-
-            </LinearLayout>
-
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="4"
+                android:text="@string/action_register" />
 
         </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
