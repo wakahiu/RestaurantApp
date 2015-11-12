@@ -55,7 +55,7 @@ The following table shows how these operations can be mapped to HTTP routes and 
 
 | Route | Verb | Description | Variables |
 | ------------- | ------------- | ------------- | ------------- |
-| /patron/enroll  | POST | Register a new patron | firstName lastName email password
+| /patron/enroll  | POST | Register a new patron | firstName <br />  lastName <br /> email <br /> password
 | Content Cell  | Content Cell  |
 
 ##### 3. Some HTTP result codes. 
