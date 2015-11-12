@@ -1,6 +1,7 @@
 package restaurantapp.restaurantapp;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +18,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class registeractivity extends Activity {
     EditText email,password;
     Button login,register;
@@ -28,7 +27,7 @@ public class registeractivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.registerlayout);
 
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
@@ -38,12 +37,11 @@ public class registeractivity extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent regactivity = new Intent(RegisterActivity.this,LoginActivity.class);
+                Intent regactivity = new Intent(registeractivity.this,loginactivity.class);
                 startActivity(regactivity);
                 finish();
             }
         });
-
 
         register.setOnClickListener(new View.OnClickListener() {
 
@@ -51,17 +49,20 @@ public class registeractivity extends Activity {
             public void onClick(View view) {
                 emailtxt = email.getText().toString();
                 passwordtxt = password.getText().toString();
+
+                /*ContentValues values = new ContentValues();
+                values.put("email",emailtxt);
+                values.put("password",passwordtxt);*/
+
                 params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("email", emailtxt));
                 params.add(new BasicNameValuePair("password", passwordtxt));
-                ServerRequest sr = new ServerRequest();
+                serverRQ sr = new serverRQ();
                 JSONObject json = sr.getJSON("http://10.0.2.2:8080/register",params);
-                //JSONObject json = sr.getJSON("http://192.168.56.1:8080/register",params);
 
                 if(json != null){
                     try{
                         String jsonstr = json.getString("response");
-
                         Toast.makeText(getApplication(),jsonstr,Toast.LENGTH_LONG).show();
 
                         Log.d("Hello", jsonstr);
@@ -72,8 +73,4 @@ public class registeractivity extends Activity {
             }
         });
     }
-
-
-
-
 }

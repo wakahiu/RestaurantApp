@@ -111,7 +111,7 @@ public class serverRQ {
         @Override
         protected JSONObject doInBackground(Params... args) {
 
-            ServerRequest request = new ServerRequest();
+            serverRQ request = new serverRQ();
             JSONObject json = request.getJSONFromUrl(args[0].url,args[0].params);
 
             return json;

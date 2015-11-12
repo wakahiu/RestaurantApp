@@ -1,11 +1,9 @@
 package restaurantapp.restaurantapp;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,16 +17,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class loginactivity extends Activity {
     /* initialize variables*/
-    /* forpass deleted*/
-    EditText email,password,res_email,code,newpass;
-    Button login,cont,cont_code,cancel,cancel1,register;
-    String emailtxt,passwordtxt,email_res_txt,code_txt,npass_txt;
+    EditText email,password;
+    Button login,register;
+    String emailtxt,passwordtxt;
     List<NameValuePair> params;
     SharedPreferences pref;
-    Dialog reset;
     serverRQ server_req;
 
     @Override
@@ -61,7 +56,7 @@ public class loginactivity extends Activity {
                 params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("email", emailtxt));
                 params.add(new BasicNameValuePair("password", passwordtxt));
-                ServerRequest sr = new ServerRequest();
+                serverRQ sr = new serverRQ();
                 JSONObject json = sr.getJSON("http://10.0.2.2:8080/login",params);
                 if(json != null){
                     try{
@@ -73,10 +68,10 @@ public class loginactivity extends Activity {
                             //Storing Data using SharedPreferences
                             edit.putString("token", token);
                             edit.putString("grav", grav);
-                            edit.commit();
-                            Intent profactivity = new Intent(LoginActivity.this,ProfileActivity.class);
+                            edit.apply();
 
-                            startActivity(profactivity);
+                            Intent restaurantlistactivity = new Intent(loginactivity.this,RestaurantItemListFragment.class);
+                            startActivity(restaurantlistactivity);
                             finish();
                         }
 
@@ -88,7 +83,5 @@ public class loginactivity extends Activity {
                 }
             }
         });
-
-
     }
 }
