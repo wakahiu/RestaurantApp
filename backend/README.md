@@ -30,7 +30,29 @@ In this application, we implement a restaurant check-in & check-out service for 
 
   - <a href="https://www.mongodb.com/blog/post/building-your-first-application-mongodb-creating-rest-api-using-mean-stack-part-1?jmp=docs&_ga=1.41398059.864639056.1446152580" target="_blank">Node.js and MEAN stack</a>
 
-##### 2. Some HTTP result codes. 
+##### 2. Functional Requirements for the REST API
+Users need to be able to do the following:
+
+###### Patrons
+  - Create an account.
+  - Check in into a restataurant.
+  - Create or join a table upon invite.
+  - See the menu items.
+  - Place an order.
+  - Recieve a bill and pay.
+Additionally, a users should be able to reset their password.
+
+###### Waiters
+  - Create an account.
+  - See tables
+  - Bill a table or individual
+  - Receive payment
+  
+Additionally, a users should be able to reset their password.
+
+The following table shows how these operations can be mapped to HTTP routes and verbs.
+
+##### 3. Some HTTP result codes. 
 
   - 200 - “OK”.
   - 201 - “Created” (Used with POST).
