@@ -18,9 +18,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+//not really an activity but a fragment
+//due to change of layout
+
 public class registeractivity extends Activity {
     EditText email,password;
-    Button login,register;
+    Button register;
     String emailtxt,passwordtxt;
     List<NameValuePair> params;
 
@@ -32,9 +35,9 @@ public class registeractivity extends Activity {
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
         register = (Button)findViewById(R.id.registerbtn);
-        login = (Button)findViewById(R.id.login);
 
-        login.setOnClickListener(new View.OnClickListener() {
+
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent regactivity = new Intent(registeractivity.this,loginactivity.class);

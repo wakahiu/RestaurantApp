@@ -1,42 +1,43 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="256dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".LoginActivity" >
+    android:layout_gravity="center" >
 
     <EditText
-        android:layout_width="440px"
-        android:layout_height="80px"
-        android:layout_gravity="center"
         android:id="@+id/email"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:layout_marginTop="30px"
-        android:hint="example@mail.com"/>
+        android:hint="email@email.com"/>
 
     <EditText
         android:id="@+id/password"
+
         android:layout_gravity="center"
-        android:layout_width="440px"
-        android:layout_height="80px"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:inputType="textPassword"
-        android:hint="******"/>
+        android:hint="Password"/>
 
     <Button
-        android:layout_width="440px"
-        android:layout_height="80px"
         android:id="@+id/registerbtn"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="#ffffff"
         android:textAlignment="center"
         android:text="Register"/>
+
     <Button
-        android:id="@+id/login"
-        android:layout_width="440px"
-        android:layout_height="80px"
-        android:layout_marginTop="10px"
+        android:id="@+id/cancelbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
         android:layout_gravity="center"
-        android:textColor="#ffffff"
         android:textAlignment="center"
-        android:text="Login Now"/>
+        android:text="Cancel"/>
 </LinearLayout>
