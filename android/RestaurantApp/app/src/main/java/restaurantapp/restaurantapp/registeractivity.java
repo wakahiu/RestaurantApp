@@ -22,9 +22,9 @@ import java.util.List;
 //due to change of layout
 
 public class registeractivity extends Activity {
-    EditText email,password;
+    EditText email,password, firstname, lastname;
     Button register;
-    String emailtxt,passwordtxt;
+    String emailtxt,passwordtxt,firstnametxt,lastnametxt;
     List<NameValuePair> params;
 
     @Override
@@ -32,6 +32,8 @@ public class registeractivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registerlayout);
 
+        firstname = (EditText)findViewById(R.id.firstname);
+        lastname = (EditText)findViewById(R.id.lastname);
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
         register = (Button)findViewById(R.id.registerbtn);
@@ -50,6 +52,8 @@ public class registeractivity extends Activity {
 
             @Override
             public void onClick(View view) {
+                firstnametxt = firstname.getText().toString();
+                lastnametxt = lastname.getText().toString();
                 emailtxt = email.getText().toString();
                 passwordtxt = password.getText().toString();
 

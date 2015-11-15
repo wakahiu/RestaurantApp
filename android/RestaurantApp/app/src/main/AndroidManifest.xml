@@ -26,6 +26,14 @@
             android:name=".registeractivity"
             android:label="registermode">
         </activity>
+
+
+        <activity
+            android:name="testmodeactivity"
+            android:label="testmode">
+        </activity>
+
+
         <activity
             android:name=".MenuItemListActivity"
             android:label="@string/title_menuitem_list"
