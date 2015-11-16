@@ -30,6 +30,11 @@
             android:name="restaurantactivity"
             android:label="restaurantmode">
         </activity>
+
+        <activity
+            android:name="testmodeactivity2"
+            android:label="testmode2">
+        </activity>
         <activity
             android:name="testmodeactivity"
             android:label="testmode">

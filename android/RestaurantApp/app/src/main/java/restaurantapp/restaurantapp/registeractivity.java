@@ -44,7 +44,7 @@ public class registeractivity extends Activity {
     String emailtxt, passwordtxt, firstnametxt, lastnametxt, stafftxt;
 
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user";
+    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user/enroll";
     // users JSONArray
     JSONArray users = null;
     // new JSONObject
@@ -90,6 +90,8 @@ public class registeractivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair(TAG_PASSWORD, passwordtxt));
                 nameValuePairs.add(new BasicNameValuePair(TAG_STAFF, stafftxt));
 
+
+
                 // Execute the SeviceHandler in post mode.
                 new PostUsers().execute();
             }
@@ -119,6 +121,11 @@ public class registeractivity extends Activity {
                     users.add(jsonStr);
                 }*/
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
         }
     }
 }

@@ -52,7 +52,7 @@ public class ServiceHandler {
                 HttpPost httpPost = new HttpPost(url);
                 // adding post params
                 if (params != null) {
-                    httpPost.setEntity(new UrlEncodedFormEntity(params)); //sets the post request as the resulting string
+                    httpPost.setEntity(new UrlEncodedFormEntity(params, "utf-8")); //sets the post request as the resulting string
                 }
 
                 httpResponse = httpClient.execute(httpPost);
