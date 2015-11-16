@@ -39,7 +39,7 @@ import android.os.AsyncTask;
 
 public class loginactivity extends Activity {
     EditText email,password,newemail,newpassword;// initialize variables
-    Button login,register,registerfrag,cancelfrag;
+    Button login,register,registerfrag,cancelfrag,test;
     String emailtxt,passwordtxt,newemailtxt,newpasswordtxt;
     SharedPreferences pref;
     serverRQ server_req;
@@ -55,6 +55,8 @@ public class loginactivity extends Activity {
         password = (EditText)findViewById(R.id.password_text);
         login = (Button)findViewById(R.id.log_in_button);
         register = (Button)findViewById(R.id.register);
+        // for db testing
+        test = (Button)findViewById(R.id.test);
 
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
 
@@ -74,7 +76,6 @@ public class loginactivity extends Activity {
                         newemailtxt = newemail.getText().toString();
                         newpasswordtxt = newpassword.getText().toString();
 
-
                     }
                 });
 
@@ -93,36 +94,21 @@ public class loginactivity extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
+                startActivity(restaurantintent);
+            }
+        });
+
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
                 Intent testintent = new Intent(loginactivity.this, testmodeactivity.class);
                 startActivity(testintent);
-
-
-                /*
-                serverRQ sr = new serverRQ();
-                JSONObject json = sr.getJSON("http://10.0.2.2:8080/login",params);
-                if(json != null){
-                    try{
-                        String jsonstr = json.getString("response");
-                        if(json.getBoolean("res")){
-                            String token = json.getString("token");
-                            String grav = json.getString("grav");
-                            SharedPreferences.Editor edit = pref.edit();
-                            //Storing Data using SharedPreferences
-                            edit.putString("token", token);
-                            edit.putString("grav", grav);
-                            edit.apply();
-
-                        }
-
-                        Toast.makeText(getApplication(),jsonstr,Toast.LENGTH_LONG).show();
-
-                    }catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }*/
             }
         });
+
+
     }
 
 }

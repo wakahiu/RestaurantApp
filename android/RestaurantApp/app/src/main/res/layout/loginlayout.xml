@@ -87,6 +87,14 @@
                 android:layout_weight="4"
                 android:text="@string/action_register" />
 
+            <Button
+                android:id="@+id/test"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="4"
+                android:text="db test" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

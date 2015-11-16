@@ -22,22 +22,23 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class testmodeactivity extends ListActivity {
+public class restaurantactivity extends ListActivity {
 
     //progress dialog for testing purposes
     private ProgressDialog pDialog;
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user";
+    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/restaurant";
     // JSON Node names
-    private static final String TAG_USERS = "users";
+    private static final String TAG_RESTAURANTS = "restaurants";
     private static final String TAG_ID = "_id";
-    private static final String TAG_FIRSTNAME = "firstName";
-    private static final String TAG_LASTNAME = "lastName";
-    private static final String TAG_EMAIL = "email";
-    // users JSONArray
-    JSONArray users = null;
+    private static final String TAG_NAME = "name";
+    private static final String TAG_ADDRESS = "address";
+    private static final String TAG_CITY = "city";
+    private static final String TAG_CUISINE = "cuisine";
+    // restaurants JSONArray
+    JSONArray restaurants = null;
     // Hashmap for ListView
-    ArrayList<HashMap<String, String>> testuserlist;
+    ArrayList<HashMap<String, String>> restaurantlist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class testmodeactivity extends ListActivity {
         setContentView(R.layout.testlayout);
 
         //components for testing purposes
-        testuserlist = new ArrayList<HashMap<String, String>>();
+        restaurantlist = new ArrayList<HashMap<String, String>>();
         ListView lv = getListView();
 
         /*// Listview on item click listener
@@ -69,17 +70,17 @@ public class testmodeactivity extends ListActivity {
         }); */
 
         // Calling async task to get json
-        new GetUsers().execute();
+        new GetRestaurants().execute();
     }
 
     /** Async task class to get json by making HTTP call**/
-    private class GetUsers extends AsyncTask<Void, Void, Void> {
+    private class GetRestaurants extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(testmodeactivity.this);
+            pDialog = new ProgressDialog(restaurantactivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -100,29 +101,31 @@ public class testmodeactivity extends ListActivity {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
-                    users = jsonObj.getJSONArray(TAG_USERS);
+                    restaurants = jsonObj.getJSONArray(TAG_RESTAURANTS);
 
                     // looping through All users
-                    for (int i = 0; i < users.length(); i++) {
-                        JSONObject user = users.getJSONObject(i);
+                    for (int i = 0; i < restaurants.length(); i++) {
+                        JSONObject user = restaurants.getJSONObject(i);
 
-                        // Personal detail is JSON object
-                        String id = user.getString(TAG_ID);
-                        String firstname = user.getString(TAG_FIRSTNAME);
-                        String lastname = user.getString(TAG_LASTNAME);
-                        String email = user.getString(TAG_EMAIL);
+                        // Restaurant JSON object
+                        String restaurantid = user.getString(TAG_ID);
+                        String name = user.getString(TAG_NAME);
+                        String address = user.getString(TAG_ADDRESS);
+                        String city = user.getString(TAG_CITY);
+                        String cuisine = user.getString(TAG_CUISINE);
 
-                        // tmp hashmap for single user
+                        // tmp hashmap for single restaurant
                         HashMap<String, String> user_tmpmat = new HashMap<String, String>();
 
                         // adding each child node to HashMap key => value
-                        user_tmpmat.put(TAG_ID, id);
-                        user_tmpmat.put(TAG_FIRSTNAME, firstname);
-                        user_tmpmat.put(TAG_LASTNAME, lastname);
-                        user_tmpmat.put(TAG_EMAIL, email);
+                        user_tmpmat.put(TAG_ID, restaurantid);
+                        user_tmpmat.put(TAG_NAME, name);
+                        user_tmpmat.put(TAG_ADDRESS, address);
+                        user_tmpmat.put(TAG_CITY, city);
+                        user_tmpmat.put(TAG_CUISINE,cuisine);
 
                         // adding user_tmpmat to testuserlist list
-                        testuserlist.add(user_tmpmat);
+                        restaurantlist.add(user_tmpmat);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -141,10 +144,10 @@ public class testmodeactivity extends ListActivity {
                 pDialog.dismiss();
             /** Updating parsed JSON data into ListView **/
             ListAdapter adapter = new SimpleAdapter(
-                    testmodeactivity.this, testuserlist,
+                    restaurantactivity.this, restaurantlist,
 
-                    R.layout.testitemlist, new String[] { TAG_FIRSTNAME, TAG_LASTNAME, TAG_EMAIL },
-                    new int[] { R.id.firstname, R.id.lastname, R.id.email}
+                    R.layout.restaurantitemlist, new String[] { TAG_NAME, TAG_ADDRESS, TAG_CITY, TAG_CUISINE },
+                    new int[] { R.id.name, R.id.address, R.id.city, R.id.cuisine}
             );
 
             setListAdapter(adapter);

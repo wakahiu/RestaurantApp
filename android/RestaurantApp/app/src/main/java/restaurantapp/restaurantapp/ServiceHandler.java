@@ -22,7 +22,6 @@ public class ServiceHandler {
     public final static int POST = 2;
 
     public ServiceHandler() {
-
     }
 
     /**
@@ -34,16 +33,14 @@ public class ServiceHandler {
     public String makeServiceCall(String url, int method) {
         return this.makeServiceCall(url, method, null);
     }
-
-    /**
+    /*
      * Making service call
      *
      * @url - url to make request
      * @method - http request method
      * @params - http request params
      */
-    public String makeServiceCall(String url, int method,
-                                  List<NameValuePair> params) {
+    public String makeServiceCall(String url, int method, List<NameValuePair> params) {
         try {
             // http client
             DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -55,7 +52,7 @@ public class ServiceHandler {
                 HttpPost httpPost = new HttpPost(url);
                 // adding post params
                 if (params != null) {
-                    httpPost.setEntity(new UrlEncodedFormEntity(params));
+                    httpPost.setEntity(new UrlEncodedFormEntity(params)); //sets the post request as the resulting string
                 }
 
                 httpResponse = httpClient.execute(httpPost);
@@ -76,6 +73,7 @@ public class ServiceHandler {
             response = EntityUtils.toString(httpEntity);
 
         } catch (UnsupportedEncodingException e) {
+            // log exception
             e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();

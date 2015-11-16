@@ -23,11 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".registeractivity"
+            android:name="registeractivity"
             android:label="registermode">
         </activity>
-
-
+        <activity
+            android:name="restaurantactivity"
+            android:label="restaurantmode">
+        </activity>
         <activity
             android:name="testmodeactivity"
             android:label="testmode">
