@@ -26,9 +26,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class testmodeactivity2 extends Activity {
-
-    JSONObject jsonObject = new JSONObject();
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +35,11 @@ public class testmodeactivity2 extends Activity {
     }
 
     private class pleaserun extends AsyncTask<String, Void, Boolean> {
-
         @Override
         protected Boolean doInBackground(String... arg0) {
             // Creating HTTP client
             HttpParams params = new BasicHttpParams();
-            params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION,
-                    HttpVersion.HTTP_1_1);
+            params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
             HttpClient httpClient = new DefaultHttpClient(params);
             // Creating HTTP Post
             HttpPost httpPost = new HttpPost("http://dinnermate.azurewebsites.net/api/v1.0/user/enroll");

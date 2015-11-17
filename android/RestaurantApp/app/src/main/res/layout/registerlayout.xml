@@ -1,13 +1,22 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="256dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:paddingTop="9dp"
-    android:paddingLeft="7dp"
-    android:paddingRight="7dp"
-    android:paddingBottom="9dp">
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:paddingBottom="25dp">
+
+    <TextView
+        android:id="@+id/registertitle"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textSize="50sp"
+        android:textAlignment="center"
+        android:paddingBottom="20dp"/>
 
     <EditText
         android:id="@+id/firstname"
@@ -15,7 +24,9 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:hint="First Name"/>
+        android:hint="First Name"
+        android:singleLine="true"/>
+        <!--android:background="@drawable/edittextborder"-->
 
     <EditText
         android:id="@+id/lastname"
@@ -23,7 +34,8 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:hint="Last Name"/>
+        android:hint="Last Name"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/email"
@@ -31,7 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:hint="email@email.com"/>
+        android:hint="email@email.com"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/password"
@@ -40,7 +53,18 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:inputType="textPassword"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:singleLine="true"/>
+
+    <CheckBox
+        android:id="@+id/staffstatus"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:button="@null"
+        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+        android:text="Are you a staff member?"/>
 
     <Button
         android:id="@+id/registerbtn"
@@ -59,4 +83,5 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         android:text="Cancel"/>
+
 </LinearLayout>

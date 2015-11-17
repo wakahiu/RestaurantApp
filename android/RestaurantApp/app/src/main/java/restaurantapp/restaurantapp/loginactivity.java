@@ -39,42 +39,38 @@ import android.os.AsyncTask;
 
 public class loginactivity extends Activity {
     EditText email,password,newemail,newpassword;// initialize variables
-    Button login,register,registerfrag,cancelfrag,test;
+    Button login,registerbutton,registerfrag,cancelfrag,test;
     String emailtxt,passwordtxt,newemailtxt,newpasswordtxt;
     SharedPreferences pref;
-    serverRQ server_req;
-    Dialog newdlg;
+    //Dialog newdlg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginlayout);
 
-        server_req = new serverRQ();
         email = (EditText)findViewById(R.id.email_text);
         password = (EditText)findViewById(R.id.password_text);
         login = (Button)findViewById(R.id.log_in_button);
-        register = (Button)findViewById(R.id.register);
+        registerbutton = (Button)findViewById(R.id.register);
         // for db testing
         test = (Button)findViewById(R.id.test);
 
-        pref = getSharedPreferences("AppPref", MODE_PRIVATE);
+        //pref = getSharedPreferences("AppPref", MODE_PRIVATE);
 
-        register.setOnClickListener(new View.OnClickListener() {
+        registerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newdlg = new Dialog(loginactivity.this);
-                newdlg.setContentView(R.layout.registerlayout);
+                Intent registerintent = new Intent(loginactivity.this,registeractivity.class);
+                startActivity(registerintent);
+                /*newdlg = new Dialog(loginactivity.this);
                 newdlg.setTitle("Register");
+                newdlg.setContentView(R.layout.registerlayout);
                 registerfrag = (Button) newdlg.findViewById(R.id.registerbtn);
 
                 registerfrag.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        newemail = (EditText) newdlg.findViewById(R.id.email);
-                        newpassword = (EditText) newdlg.findViewById(R.id.password);
-                        newemailtxt = newemail.getText().toString();
-                        newpasswordtxt = newpassword.getText().toString();
 
                     }
                 });
@@ -87,7 +83,7 @@ public class loginactivity extends Activity {
                         newdlg.dismiss();
                     }
                 });
-                newdlg.show();
+                newdlg.show();*/
             }
         });
 

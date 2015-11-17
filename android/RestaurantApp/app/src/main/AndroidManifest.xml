@@ -28,7 +28,7 @@
         </activity>
         <activity
             android:name="restaurantactivity"
-            android:label="restaurantmode">
+            android:label="restaurantlistmode">
         </activity>
 
         <activity
