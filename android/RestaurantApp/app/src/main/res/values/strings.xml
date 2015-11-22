@@ -17,6 +17,8 @@
     <string name="title_menuitem_detail">MenuItem Detail</string>
 
     <!-- Strings related to master restaurant list -->
-    <string name="title_restaurantitem_list">RestaurantItems</string>
-    <string name="title_restaurantitem_detail">RestaurantItem Detail</string>
+    <string name="title_restaurantitem_list">Restaurants near you</string>
+    <string name="title_restaurantitem_detail">Restaurant menu</string>
+    <string name="title_restaurant_list">Restaurants</string>
+    <string name="title_restaurant_detail">Restaurant Detail</string>
 </resources>

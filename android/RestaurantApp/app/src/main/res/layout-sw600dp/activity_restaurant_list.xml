@@ -3,20 +3,21 @@
     android:layout_height="match_parent" android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp" android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal" android:orientation="horizontal"
-    android:showDividers="middle" tools:context="restaurantapp.restaurantapp.MenuItemListActivity">
+    android:showDividers="middle"
+    tools:context="restaurantapp.restaurantapp.RestaurantListActivity">
 
     <!--
-    This layout is a two-pane layout for the MenuItems
+    This layout is a two-pane layout for the Restaurants
     master/detail flow.
     
     -->
 
-    <fragment android:id="@+id/menuitem_list"
-        android:name="restaurantapp.restaurantapp.MenuItemListFragment" android:layout_width="0dp"
+    <fragment android:id="@+id/restaurant_list"
+        android:name="restaurantapp.restaurantapp.RestaurantListFragment" android:layout_width="0dp"
         android:layout_height="match_parent" android:layout_weight="1"
         tools:layout="@android:layout/list_content" />
 
-    <FrameLayout android:id="@+id/menuitem_detail_container" android:layout_width="0dp"
+    <FrameLayout android:id="@+id/restaurant_detail_container" android:layout_width="0dp"
         android:layout_height="match_parent" android:layout_weight="3" />
 
 </LinearLayout>

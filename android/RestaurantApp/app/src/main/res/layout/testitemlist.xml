@@ -27,7 +27,6 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <!-- Email label -->
     <TextView
         android:id="@+id/email"
         android:layout_width="match_parent"

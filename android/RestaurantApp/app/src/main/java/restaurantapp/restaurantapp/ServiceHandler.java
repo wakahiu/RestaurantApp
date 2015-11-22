@@ -1,5 +1,7 @@
 package restaurantapp.restaurantapp;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -16,7 +18,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 public class ServiceHandler {
-
+    Integer responsecode = null;
     static String response = null;
     public final static int GET = 1;
     public final static int POST = 2;
@@ -57,8 +59,7 @@ public class ServiceHandler {
             } else if (method == GET) {
                 // appending params to url
                 if (params != null) {
-                    String paramString = URLEncodedUtils
-                            .format(params, "utf-8");
+                    String paramString = URLEncodedUtils.format(params, "utf-8");
                     url += "?" + paramString;
                 }
                 HttpGet httpGet = new HttpGet(url);
@@ -68,14 +69,21 @@ public class ServiceHandler {
             }
             httpEntity = httpResponse.getEntity();
             response = EntityUtils.toString(httpEntity);
+            responsecode = httpResponse.getStatusLine().getStatusCode();
+            // Log the results for debugging  information
+            Log.e("httpEntity",httpEntity.toString());
+            Log.e("Status Code",responsecode.toString());
 
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException err) {
             // log exception
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            err.printStackTrace();
+            Log.e("Unsupp Enc Except", err.toString());
+        } catch (ClientProtocolException err) {
+            err.printStackTrace();
+            Log.e("Client Prot Except", err.toString());
+        } catch (IOException err) {
+            err.printStackTrace();
+            Log.e("IO Exception", err.toString());
         }
 
         return response;

@@ -22,7 +22,8 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/framelayout"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -30,13 +31,13 @@
         <include layout="@layout/activity_restaurantitem_list" />
     </FrameLayout>
 
+    <!--layout margin determines how farm from the edge the widget has to be-->
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/sbasket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="top|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
-
+        android:src="@drawable/ycart" />
 
 </android.support.design.widget.CoordinatorLayout>
