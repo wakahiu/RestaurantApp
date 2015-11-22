@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class restaurantactivity extends ListActivity {
+public class menuactivity extends ListActivity {
 
     //progress dialog for testing purposes
     private ProgressDialog pDialog;
@@ -43,19 +43,17 @@ public class restaurantactivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.restaurantlistlayout);
+        setContentView(R.layout.menulistlayout);
 
         //components for testing purposes
         restaurantlist = new ArrayList<HashMap<String, String>>();
         ListView lv = getListView();
 
-        // Listview on item click listener
+        /*// Listview on item click listener
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            /*@Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
                 // getting values from selected ListItem
                 String firstname = ((TextView) view.findViewById(R.id.firstname)).getText().toString();
                 String lastname = ((TextView) view.findViewById(R.id.lastname)).getText().toString();
@@ -66,13 +64,10 @@ public class restaurantactivity extends ListActivity {
                 in.putExtra(TAG_FIRSTNAME, firstname);
                 in.putExtra(TAG_LASTNAME, lastname);
                 in.putExtra(TAG_EMAIL, email);
-                startActivity(in);*/
-
-                Intent restaurantlistintent = new Intent(getApplicationContext(), menuactivity.class);
-                startActivity(restaurantlistintent);
+                startActivity(in);
 
             }
-        });
+        }); */
 
         // Calling async task to get json
         new GetRestaurants().execute();
@@ -85,7 +80,7 @@ public class restaurantactivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(restaurantactivity.this);
+            pDialog = new ProgressDialog(menuactivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -149,7 +144,7 @@ public class restaurantactivity extends ListActivity {
                 pDialog.dismiss();
             /** Updating parsed JSON data into ListView **/
             ListAdapter adapter = new SimpleAdapter(
-                    restaurantactivity.this, restaurantlist,
+                    menuactivity.this, restaurantlist,
 
                     R.layout.restaurantitemlist, new String[] { TAG_NAME, TAG_ADDRESS, TAG_CITY, TAG_CUISINE },
                     new int[] { R.id.name, R.id.address, R.id.city, R.id.cuisine}
