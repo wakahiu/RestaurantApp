@@ -55,6 +55,8 @@ public class loginactivity extends Activity {
         // User input texts
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
+        emailtxt = email.toString().toLowerCase();
+        passwordtxt = password.toString();
 
         // Buttons
         login = (Button)findViewById(R.id.log_in_button);

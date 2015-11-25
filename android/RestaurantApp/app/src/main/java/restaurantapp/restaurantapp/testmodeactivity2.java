@@ -42,7 +42,7 @@ public class testmodeactivity2 extends Activity {
             params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
             HttpClient httpClient = new DefaultHttpClient(params);
             // Creating HTTP Post
-            HttpPost httpPost = new HttpPost("http://dinnermate.azurewebsites.net/api/v1.0/user/enroll");
+            HttpPost httpPost = new HttpPost("http://dinnermate.azurewebsites.net/api/v1.0/user");
 
             // Url Encoding the POST parameters
             try {

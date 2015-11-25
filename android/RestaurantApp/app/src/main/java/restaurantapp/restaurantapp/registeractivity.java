@@ -40,7 +40,7 @@ public class registeractivity extends Activity {
     Boolean staffboolean;
 
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user/enroll";
+    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user";
     // JSON OBject nodes
     private static final String TAG_FIRSTNAME = "firstName";
     private static final String TAG_LASTNAME = "lastName";
@@ -99,7 +99,7 @@ public class registeractivity extends Activity {
             params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
             HttpClient httpClient = new DefaultHttpClient(params);
             // Creating HTTP Post
-            HttpPost httpPost = new HttpPost("http://dinnermate.azurewebsites.net/api/v1.0/user/enroll");
+            HttpPost httpPost = new HttpPost(url);
 
             try {
                 // Initialize List

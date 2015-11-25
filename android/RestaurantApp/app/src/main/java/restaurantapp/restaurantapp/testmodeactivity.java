@@ -46,7 +46,7 @@ public class testmodeactivity extends ListActivity {
 
         //components for testing purposes
         testuserlist = new ArrayList<HashMap<String, String>>();
-        ListView lv = getListView();
+        //ListView lv = getListView();
 
         /*// Listview on item click listener
         lv.setOnItemClickListener(new OnItemClickListener() {

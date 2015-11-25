@@ -26,6 +26,9 @@
             android:name=".registeractivity"
             android:label="registermode"></activity>
         <activity
+            android:name=".shoppingbasketactivity"
+            android:label="sbasketmode"></activity>
+        <activity
             android:name=".menuactivity"
             android:label="menumode"></activity>
         <activity
