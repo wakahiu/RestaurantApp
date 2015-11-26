@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+
     android:layout_gravity="center"
     android:paddingLeft="40dp"
     android:paddingRight="40dp"
     android:paddingBottom="25dp">
 
     <TextView
-        android:id="@+id/registertitle"
+        android:id="@+id/paymentdetailtitle"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:textSize="55sp"
-
+        android:text="Please enter your payment details."
+        android:textSize="30sp"
         android:paddingBottom="10dp"/>
-
-    <EditText
-        android:id="@+id/firstname"
-
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="First Name"
-        android:singleLine="true"/>
-        <!--android:background="@drawable/edittextborder"-->
 
     <EditText
         android:id="@+id/lastname"
@@ -39,50 +28,69 @@
         android:singleLine="true"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/firstname"
 
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:hint="email@email.com"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:hint="First Name"
         android:singleLine="true"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/cardnumber"
 
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:inputType="textPassword"
-        android:hint="Password"
+        android:layout_height="45dp"
+        android:inputType="number"
+        android:hint="Credit Card Number"
         android:singleLine="true"/>
 
-    <CheckBox
-        android:id="@+id/staffstatus"
-
+    <RelativeLayout
+        android:id="@+id/rlpackage1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:button="@null"
-        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-        android:text="Are you a staff member?"/>
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:id="@+id/expirymonth"
+
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:inputType="number"
+            android:hint="Expiry Month"
+            android:singleLine="true"/>
+
+        <EditText
+            android:id="@+id/expiryyear"
+
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:inputType="number"
+            android:hint="Expiry year"
+            android:singleLine="true"
+            android:layout_toRightOf="@+id/expirymonth"/>
+
+    </RelativeLayout>
 
     <Button
-        android:id="@+id/registerbtn"
+        android:id="@+id/paynowbtn"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:text="Register"/>
+        android:text="Make Payment"/>
 
     <Button
-        android:id="@+id/cancelbtn"
+        android:id="@+id/cancelpaymentbtn"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
         android:layout_gravity="center"
         android:textAlignment="center"
         android:text="Cancel"/>
+
+
 
 </LinearLayout>
