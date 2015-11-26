@@ -213,6 +213,7 @@ public class menuactivity extends ListActivity {
     private class PostOrders extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... arg0) {
+            String logPrefix = getClass().getEnclosingClass().getName();
             HttpURLConnection urlConnection = null;
             try {
 
@@ -228,15 +229,20 @@ public class menuactivity extends ListActivity {
                     }
                 });
 
+                // Compose the JSON object.
                 JSONObject jsonObj = new JSONObject();
                 List<String> menuItemIdList = new ArrayList<String>();
                 menuItemIdList.add("5651bde8b6798a8c11ee65fb");
+                menuItemIdList.add("5651bdc3b6798a8c11ee65fa");
                 jsonObj.put("menuItemIdList", new JSONArray(menuItemIdList));
+                Log.d(logPrefix, jsonObj.toString());
 
                 orderURL = new URL(orderUrlStr);
                 urlConnection = (HttpURLConnection) orderURL.openConnection();
                 urlConnection.setDoOutput(true);
                 urlConnection.setUseCaches(false);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestProperty("Accept", "application/json");
                 urlConnection.setChunkedStreamingMode(0);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.connect();
