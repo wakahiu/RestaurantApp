@@ -63,11 +63,12 @@ public class shoppingbasketactivity extends ListActivity {
                 new int[] { R.id.foodname, R.id.foodprice}
         );
         setListAdapter(adapter);*/
-        new GetShoppingBasket().execute();
+
+        //new GetShoppingBasket().execute();
     }
 
     /** Async task class to get json by making HTTP call**/
-    private class GetShoppingBasket extends AsyncTask<Void, Void, Void> {
+    /*private class GetShoppingBasket extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -129,7 +130,7 @@ public class shoppingbasketactivity extends ListActivity {
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /** Updating parsed JSON data into ListView **/
+            // Updating parsed JSON data into ListView
             ListAdapter adapter = new SimpleAdapter(
                     shoppingbasketactivity.this, orderlist,
 
@@ -139,7 +140,7 @@ public class shoppingbasketactivity extends ListActivity {
 
             setListAdapter(adapter);
         }
-    }
+    }*/
 
 
 }
