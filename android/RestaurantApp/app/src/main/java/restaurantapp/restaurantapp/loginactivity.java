@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +32,8 @@ import org.apache.http.params.HttpParams;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +87,26 @@ public class loginactivity extends Activity {
                 // execute POST req to the login endpoint URL
                 new PostUserCredential().execute();
                 */
+            }
+        });
+
+        // Check to see whether a network connection is available
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo == null || !networkInfo.isConnected()) {
+            Log.e(getClass().getEnclosingClass().getName(),"Network unavailable");
+        }
+
+        final String usernameX = "38KBYFLH2MID9SY55GI4FEXFB";
+        final String passwordX = "2eyLz5LKmB/AoD+g77gHOw6RRThLjucZblIq9cGlSno";
+        // Unless paired with HTTPS, this is not a secure mechanism for user authentication.
+        // In particular, the username, password, request and response are all
+        // transmitted over the network without encryption.
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(usernameX, passwordX.toCharArray());
             }
         });
 
