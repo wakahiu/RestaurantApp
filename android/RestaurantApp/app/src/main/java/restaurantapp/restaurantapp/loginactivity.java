@@ -202,8 +202,8 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
-//                Intent forward2restaurantintent = new Intent(loginactivity.this,restaurantactivity.class);
-//                startActivity(forward2restaurantintent);
+                Intent forward2restaurantintent = new Intent(loginactivity.this,restaurantactivity.class);
+                startActivity(forward2restaurantintent);
             } else {
                 Toast.makeText(loginactivity.this, "Failed registration. Please try again!",Toast.LENGTH_LONG).show();
             }

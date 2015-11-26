@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +43,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -217,17 +219,20 @@ public class menuactivity extends ListActivity {
             HttpURLConnection urlConnection = null;
             try {
 
-                final String usernameX = "38KBYFLH2MID9SY55GI4FEXFB";
-                final String passwordX = "2eyLz5LKmB/AoD+g77gHOw6RRThLjucZblIq9cGlSno";
+                final String username = "38KBYFLH2MID9SY55GI4FEXFB";
+                final String password = "2eyLz5LKmB/AoD+g77gHOw6RRThLjucZblIq9cGlSno";
                 // Unless paired with HTTPS, this is not a secure mechanism for user authentication.
                 // In particular, the username, password, request and response are all
                 // transmitted over the network without encryption.
                 Authenticator.setDefault(new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(usernameX, passwordX.toCharArray());
+                        return new PasswordAuthentication(username, password.toCharArray());
                     }
                 });
+
+                String userPassword = username + ":" + password;
+                String encoding =  Base64.encodeToString(userPassword.getBytes(Charset.forName("UTF-8")), Base64.DEFAULT);
 
                 // Compose the JSON object.
                 JSONObject jsonObj = new JSONObject();
@@ -243,6 +248,7 @@ public class menuactivity extends ListActivity {
                 urlConnection.setUseCaches(false);
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 urlConnection.setRequestProperty("Accept", "application/json");
+                //urlConnection.setRequestProperty("Authorization", "Basic " + encoding);
                 urlConnection.setChunkedStreamingMode(0);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.connect();
@@ -275,7 +281,7 @@ public class menuactivity extends ListActivity {
             } catch (IOException exception) {
                 Log.e(getClass().getEnclosingClass().getName(),exception.toString());
             } catch (JSONException exception) {
-                Log.e(getClass().getEnclosingClass().getName(),exception.toString());
+                Log.e(getClass().getEnclosingClass().getName(), exception.toString());
             } finally {
                 if (urlConnection != null ) {
                     urlConnection.disconnect();
