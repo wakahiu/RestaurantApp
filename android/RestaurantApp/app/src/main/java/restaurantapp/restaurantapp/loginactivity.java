@@ -46,9 +46,6 @@ public class loginactivity extends Activity {
     // server URL
     private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user/authenticate";
 
-    //SharedPreferences pref;
-    //Dialog newdlg;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,25 +60,15 @@ public class loginactivity extends Activity {
         // Buttons
         login = (Button)findViewById(R.id.log_in_button);
         registerbutton = (Button)findViewById(R.id.register);
+
         // for db testing
         test = (Button)findViewById(R.id.test);
-
-        //pref = getSharedPreferences("AppPref", MODE_PRIVATE);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent restaurantlistintent = new Intent(loginactivity.this,restaurantactivity.class);
                 startActivity(restaurantlistintent);
-                /*
-                email = (EditText) findViewById(R.id.email);
-                password = (EditText) findViewById(R.id.password);
-                //
-                emailtxt = email.getText().toString();
-                passwordtxt = password.getText().toString();
-                // execute POST req to the login endpoint URL
-                new PostUserCredential().execute();
-                */
             }
         });
 
@@ -90,27 +77,6 @@ public class loginactivity extends Activity {
             public void onClick(View view) {
                 Intent registerintent = new Intent(loginactivity.this,registeractivity.class);
                 startActivity(registerintent);
-                /*newdlg = new Dialog(loginactivity.this);
-                newdlg.setTitle("Register");
-                newdlg.setContentView(R.layout.registerlayout);
-                registerfrag = (Button) newdlg.findViewById(R.id.registerbtn);
-
-                registerfrag.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                //cancel to leave dialogue fragment
-                cancelfrag = (Button) newdlg.findViewById(R.id.cancelbtn);
-                cancelfrag.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        newdlg.dismiss();
-                    }
-                });
-                newdlg.show();*/
             }
         });
 
@@ -124,7 +90,6 @@ public class loginactivity extends Activity {
         });
 
     }
-
 
     /* Use HTTP POST to request credential check */
     private class PostUserCredential extends AsyncTask<String, Void, Void> {
