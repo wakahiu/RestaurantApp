@@ -42,7 +42,7 @@ public class loginactivity extends Activity {
     private static final String TAG_EMAIL = "email";
     private static final String TAG_PASSWORD = "password";
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user/enroll";
+    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user/authenticate";
 
     //SharedPreferences pref;
     //Dialog newdlg;
