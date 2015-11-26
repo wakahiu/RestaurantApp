@@ -61,14 +61,10 @@ public class loginactivity extends Activity {
         login = (Button)findViewById(R.id.log_in_button);
         registerbutton = (Button)findViewById(R.id.register);
 
-        // for db testing
-        test = (Button)findViewById(R.id.test);
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent restaurantlistintent = new Intent(loginactivity.this,restaurantactivity.class);
-                startActivity(restaurantlistintent);
+                new PostUserCredential().execute();
             }
         });
 
@@ -79,16 +75,6 @@ public class loginactivity extends Activity {
                 startActivity(registerintent);
             }
         });
-
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent testintent = new Intent(loginactivity.this, testmodeactivity.class);
-                startActivity(testintent);
-            }
-        });
-
     }
 
     /* Use HTTP POST to request credential check */
@@ -142,10 +128,10 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
-//                Intent forward2restaurantintent = new Intent(loginactivity.this,restaurantactivity.class);
-//                startActivity(forward2restaurantintent);
+                Intent allow2enterintent = new Intent(loginactivity.this,restaurantactivity.class);
+                startActivity(allow2enterintent);
             } else {
-                Toast.makeText(loginactivity.this, "Failed registration. Please try again!",Toast.LENGTH_LONG).show();
+                Toast.makeText(loginactivity.this, "Failed login. Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }
