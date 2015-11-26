@@ -38,6 +38,8 @@ public class loginactivity extends Activity {
     EditText email,password;
     Button login,registerbutton,test;
     String emailtxt,passwordtxt;
+    Integer responsecode;
+    Boolean authenticated = false;
 
     private static final String TAG_EMAIL = "email";
     private static final String TAG_PASSWORD = "password";
@@ -125,7 +127,7 @@ public class loginactivity extends Activity {
 
 
     /* Use HTTP POST to request credential check */
-    /*private class PostUserCredential extends AsyncTask<String, Void, Void> {
+    private class PostUserCredential extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... arg0) {
             // Creating HTTP client
@@ -174,14 +176,12 @@ public class loginactivity extends Activity {
             super.onPostExecute(result);
 
             if  (responsecode.equals(201)) {
-                Toast.makeText(registeractivity.this, "Registration successful!",Toast.LENGTH_LONG).show();
-                Intent back2loginintent = new Intent(registeractivity.this,loginactivity.class);
-                startActivity(back2loginintent);
+                Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
+//                Intent forward2restaurantintent = new Intent(loginactivity.this,restaurantactivity.class);
+//                startActivity(forward2restaurantintent);
             } else {
-                Toast.makeText(registeractivity.this, "Failed registration. Please try again!",Toast.LENGTH_LONG).show();
+                Toast.makeText(loginactivity.this, "Failed registration. Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }
-}*/
-
 }
