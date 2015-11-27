@@ -2,8 +2,10 @@ package restaurantapp.restaurantapp;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -224,15 +226,8 @@ public class menuactivity extends ListActivity {
                 // Unless paired with HTTPS, this is not a secure mechanism for user authentication.
                 // In particular, the username, password, request and response are all
                 // transmitted over the network without encryption.
-                Authenticator.setDefault(new Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password.toCharArray());
-                    }
-                });
-
                 String userPassword = username + ":" + password;
-                String encoding =  Base64.encodeToString(userPassword.getBytes(Charset.forName("UTF-8")), Base64.DEFAULT);
+                String basicAuth = Base64.encodeToString(userPassword.getBytes(), Base64.NO_WRAP);
 
                 // Compose the JSON object.
                 JSONObject jsonObj = new JSONObject();
@@ -245,10 +240,12 @@ public class menuactivity extends ListActivity {
                 orderURL = new URL(orderUrlStr);
                 urlConnection = (HttpURLConnection) orderURL.openConnection();
                 urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
                 urlConnection.setUseCaches(false);
+                urlConnection.setAllowUserInteraction(false);
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 urlConnection.setRequestProperty("Accept", "application/json");
-                //urlConnection.setRequestProperty("Authorization", "Basic " + encoding);
+                urlConnection.setRequestProperty("Authorization","Basic " + basicAuth);
                 urlConnection.setChunkedStreamingMode(0);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.connect();
@@ -260,6 +257,7 @@ public class menuactivity extends ListActivity {
 
                 writer.write(jsonObj.toString());
 
+                writer.flush();
                 writer.close();
 
                 // if there is a response code AND that response code is 200 OK, do
@@ -268,20 +266,35 @@ public class menuactivity extends ListActivity {
                 Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
                 if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     // OK
-
+                    Log.d(getClass().getEnclosingClass().getName(),
+                            urlConnection.getResponseMessage());
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
                 } else {
                     // Server returned HTTP error code.
-                    Log.d(getClass().getEnclosingClass().getName(), ""+ urlConnection.getResponseCode());
+                    /*
+                    StringBuilder sb = new StringBuilder();
+                    InputStreamReader inputStreamReader =
+                            new InputStreamReader(urlConnection.getInputStream(),"utf-8");
+                    BufferedReader br = new BufferedReader(inputStreamReader);
+                    String line = null;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+
+                    br.close();
+
+                    Log.w(logPrefix, sb.toString());
+                    */
+                    Log.w(logPrefix, "" + urlConnection.getResponseCode());
                 }
 
             } catch (MalformedURLException exception) {
-                Log.e(getClass().getEnclosingClass().getName(),exception.toString());
+                Log.e(logPrefix, exception.toString());
             } catch (IOException exception) {
-                Log.e(getClass().getEnclosingClass().getName(),exception.toString());
+                Log.e(logPrefix, exception.toString());
             } catch (JSONException exception) {
-                Log.e(getClass().getEnclosingClass().getName(), exception.toString());
+                Log.e(logPrefix, exception.toString());
             } finally {
                 if (urlConnection != null ) {
                     urlConnection.disconnect();

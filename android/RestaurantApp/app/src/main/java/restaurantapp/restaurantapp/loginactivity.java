@@ -41,7 +41,7 @@ import android.os.AsyncTask;
 
 public class loginactivity extends Activity {
     EditText email,password;
-    Button login,registerbutton,test;
+    Button login,registerbutton,loginBypass;
     String emailtxt,passwordtxt;
     Integer responsecode;
     Boolean authenticated = false;
@@ -57,23 +57,31 @@ public class loginactivity extends Activity {
         setContentView(R.layout.loginlayout);
 
         // User input texts
-        email = (EditText)findViewById(R.id.loginemail);
-        password = (EditText)findViewById(R.id.loginpassword);
-        emailtxt = email.getText().toString().toLowerCase();
-        passwordtxt = password.getText().toString();
-
-        Log.d("email name", " | "+ emailtxt);
-        Log.d("email tag", TAG_EMAIL);
-        Log.d("password name", " | " + passwordtxt);
-        Log.d("password tag",TAG_PASSWORD);
-
+        email = (EditText)findViewById(R.id.email);
+        password = (EditText)findViewById(R.id.password);
         // Buttons
         login = (Button)findViewById(R.id.log_in_button);
         registerbutton = (Button)findViewById(R.id.register);
+        loginBypass = (Button)findViewById(R.id.loginBypass);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                emailtxt = email.getText().toString().toLowerCase();
+                passwordtxt = password.getText().toString();
+
+                new PostUserCredential().execute();
+            }
+        });
+
+        loginBypass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                emailtxt = "test@fake.com";
+                passwordtxt = "888iii$$$III";
+
                 new PostUserCredential().execute();
             }
         });
