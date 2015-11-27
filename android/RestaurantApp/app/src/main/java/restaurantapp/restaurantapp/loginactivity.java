@@ -57,10 +57,15 @@ public class loginactivity extends Activity {
         setContentView(R.layout.loginlayout);
 
         // User input texts
-        email = (EditText)findViewById(R.id.email);
-        password = (EditText)findViewById(R.id.password);
-        emailtxt = email.toString().toLowerCase();
-        passwordtxt = password.toString();
+        email = (EditText)findViewById(R.id.loginemail);
+        password = (EditText)findViewById(R.id.loginpassword);
+        emailtxt = email.getText().toString().toLowerCase();
+        passwordtxt = password.getText().toString();
+
+        Log.d("email name", " | "+ emailtxt);
+        Log.d("email tag", TAG_EMAIL);
+        Log.d("password name", " | " + passwordtxt);
+        Log.d("password tag",TAG_PASSWORD);
 
         // Buttons
         login = (Button)findViewById(R.id.log_in_button);
@@ -129,7 +134,10 @@ public class loginactivity extends Activity {
                 // Log the results for debugging  information
                 Log.e("httpEntity",httpEntity.toString());
                 Log.e("Status Code",responsecode.toString());
-
+                Log.d("email name", emailtxt);
+                Log.d("email tag", TAG_EMAIL);
+                Log.d("password name", passwordtxt);
+                Log.d("password tag",TAG_PASSWORD);
             } catch (UnsupportedEncodingException err) {
                 // writing error to Log
                 err.printStackTrace();

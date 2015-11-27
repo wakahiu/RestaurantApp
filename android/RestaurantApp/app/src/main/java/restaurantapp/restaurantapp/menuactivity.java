@@ -287,58 +287,6 @@ public class menuactivity extends ListActivity {
                     urlConnection.disconnect();
                 }
             }
-
-            /*
-            try {
-                urlConnection.setDoOutput(true);
-                urlConnection.setChunkedStreamingMode(0);
-
-                OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-                writeStream(out);
-
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                readStream(in);
-
-            }
-
-            // Creating HTTP client
-            HttpParams params = new BasicHttpParams();
-            params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-            HttpClient httpClient = new DefaultHttpClient(params);
-            // Creating HTTP Post
-            HttpPost httpPost = new HttpPost(url);
-
-            try {
-                // Initialize List
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                // add the new information into nameValuePairs
-                nameValuePairs.add(new BasicNameValuePair(TAG_FOODNAME, chosenname));
-                nameValuePairs.add(new BasicNameValuePair(TAG_FOODPRICE, chosenprice));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "utf-8"));
-
-                // Execute HTTP Request and return response
-                HttpResponse response = httpClient.execute(httpPost);
-                HttpEntity httpEntity = response.getEntity();
-                orderresponsecode = response.getStatusLine().getStatusCode();
-                // Log the results for debugging  information
-                Log.e("Order httpEntity",httpEntity.toString());
-                Log.e("Order Status Code",orderresponsecode.toString());
-
-            } catch (UnsupportedEncodingException err) {
-                // writing error to Log
-                err.printStackTrace();
-                Log.e("Unsupp Enc Except",err.toString());
-            } catch (ClientProtocolException err) {
-                // writing exception to log
-                err.printStackTrace();
-                Log.e("Client Prot Except",err.toString());
-            } catch (IOException err) {
-                // writing exception to log
-                err.printStackTrace();
-                Log.e("IO Exception",err.toString());
-            }
-            */
             return null;
         }
 
