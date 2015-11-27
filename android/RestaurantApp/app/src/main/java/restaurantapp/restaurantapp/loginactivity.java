@@ -59,9 +59,6 @@ public class loginactivity extends Activity {
         // User input texts
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
-        emailtxt = email.toString().toLowerCase();
-        passwordtxt = password.toString();
-
         // Buttons
         login = (Button)findViewById(R.id.log_in_button);
         registerbutton = (Button)findViewById(R.id.register);
@@ -69,6 +66,10 @@ public class loginactivity extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                emailtxt = email.getText().toString().toLowerCase();
+                passwordtxt = password.getText().toString();
+
                 new PostUserCredential().execute();
             }
         });
