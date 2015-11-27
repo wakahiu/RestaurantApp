@@ -56,9 +56,7 @@ public class loginactivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginlayout);
 
-        // User input texts
-        email = (EditText)findViewById(R.id.email);
-        password = (EditText)findViewById(R.id.password);
+
         // Buttons
         login = (Button)findViewById(R.id.log_in_button);
         registerbutton = (Button)findViewById(R.id.register);
@@ -67,9 +65,13 @@ public class loginactivity extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // User input texts
+                email = (EditText)findViewById(R.id.email);
+                password = (EditText)findViewById(R.id.password);
                 emailtxt = email.getText().toString().toLowerCase();
                 passwordtxt = password.getText().toString();
+                Log.e("emailtxt3",emailtxt);
+                Log.e("passwordtxt3",passwordtxt);
 
                 new PostUserCredential().execute();
             }
