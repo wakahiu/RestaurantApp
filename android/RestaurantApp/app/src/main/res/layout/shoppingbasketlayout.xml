@@ -16,12 +16,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_above="@+id/purchase"
         />
 
     <Button
         android:id="@+id/purchase"
 
-        android:layout_below="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

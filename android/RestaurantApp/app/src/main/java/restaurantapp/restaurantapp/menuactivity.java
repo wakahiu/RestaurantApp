@@ -122,10 +122,6 @@ public class menuactivity extends ListActivity {
                 chosenprice = ((TextView) view.findViewById(R.id.foodprice))
                         .getText().toString();
 
-                /*SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("foodnamekey", chosenfoodname);
-                editor.putString("foodpricekey", chosenfoodprice);
-                editor.commit();*/
                 new PostOrders().execute();
             }
         });

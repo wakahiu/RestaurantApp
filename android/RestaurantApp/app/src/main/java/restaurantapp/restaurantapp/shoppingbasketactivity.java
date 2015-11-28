@@ -20,65 +20,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class shoppingbasketactivity extends ListActivity {
-    private ProgressDialog pDialog; //progress dialog for testing purposes
+    // progress dialog is initiated while fetching data from server
+    private ProgressDialog pDialog;
 
     // server URL
-    private static String url = "";
+    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/order";
 
-    // restaurants JSONArray & orders JSONArray
-    JSONArray orderArray = null;
+    // JSONArrays
+    JSONArray orderIDArray = null;
+
+    // JSONObjs
+    JSONObject IDfoundObj;
 
     // Hashmap for ListView
-    ArrayList<HashMap<String, String>> orderlist;
+    ArrayList<HashMap<String, String>> sbasketlist;
 
-    /*private String TAG_FOODNAME = "name4food";
-    private String TAG_FOODPRICE = "price4food";
-    // users JSONArray
-    JSONArray sbasketorder = null;
-    int counterint;
-    ArrayList<HashMap<String, String>> sbasketarray;
-    String counterstring, chosenfoodname, chosenfoodprice;*/
+    // Strings
+    String TAG_ID = "_id";
+    String ID2look4 = "5658c6a7496fdda406d59f13";
+    String IDfoundObjtxt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shoppingbasketlayout);
 
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //counterstring = prefs.getString("countervalue",null);
-        //chosenfoodname = prefs.getString("foodnamekey", null);
-        //chosenfoodprice = prefs.getString(sbasketfoodprice, null);
-        //sbasketarray = new ArrayList<HashMap<String, String>>();
-        //sbasketarray.clear();
-        // tmp hashmap for sbasket
-        /*HashMap<String, String> sbasket_tmpmat = new HashMap<String, String>();
-        // adding each child node to HashMap key => value
-        sbasket_tmpmat.put("counter",counterstring);
-        sbasket_tmpmat.put(TAG_FOODNAME, chosenfoodname);
-        //sbasket_tmpmat.put(TAG_FOODPRICE, chosenfoodprice);
-
-        sbasketarray.add(sbasket_tmpmat);
-        ListAdapter adapter = new SimpleAdapter(shoppingbasketactivity.this, sbasketarray,
-                R.layout.sbasketlistlayout, new String[] {"counter", TAG_FOODNAME},
-                new int[] { R.id.foodname, R.id.foodprice}
-        );
-        setListAdapter(adapter);*/
-
-        //new GetShoppingBasket().execute();
+        new GetShoppingBasket().execute();
     }
 
     /** Async task class to get json by making HTTP call**/
-    /*private class GetShoppingBasket extends AsyncTask<Void, Void, Void> {
+    private class GetShoppingBasket extends AsyncTask<Void, Void, Void> {
 
-        @Override
+        /*@Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Showing progress dialog
+            // Showing progress dialog as data is fetched
             pDialog = new ProgressDialog(shoppingbasketactivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
-        }
+        }*/
 
         @Override
         protected Void doInBackground(Void... arg0) {
@@ -88,22 +69,44 @@ public class shoppingbasketactivity extends ListActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
 
-            Log.d("Response: ", "> " + jsonStr);
+            Log.e("Response: ", "> " + jsonStr);
 
             if (jsonStr != null) {
                 try {
+                    // initialize a JSONObject from the GET response entity
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
-                    // Getting JSON Array node
-                    orderArray = jsonObj.getJSONArray(TAG_MENU);
+                    // search within found JSONObject to get the array with (specific name)
+                    orderIDArray = jsonObj.getJSONArray(TAG_ID);
 
-                    // looping through All users
-                    for (int i = 0; i < orderArray.length(); i++) {
-                        JSONObject user = orderArray.getJSONObject(i);
+                    for (int i = 0; i < orderIDArray.length(); i++) {
+                        IDfoundObj = orderIDArray.getJSONObject(i);
+                        IDfoundObjtxt = IDfoundObj.toString();
+
+                        if (ID2look4 == IDfoundObjtxt) {
+                            JSONObject ordereditemslist = IDfoundObj.getJSONObject("menuItems");
+                            String oitemname = ordereditemslist.getString("name");
+                            String oitemprice = ordereditemslist.getString("price");
+
+                            // tmp hashmap for this specific order
+                            HashMap<String,String> order_tmpmap = new HashMap<String, String>();
+
+                            // add value to each key
+                            order_tmpmap.put("name", oitemname);
+                            order_tmpmap.put("price", oitemprice);
+
+                            // add order_tmpmap to sbasket master list
+                            sbasketlist.add(order_tmpmap);
+                            }
+                        }
+                    /*
+                    // loop through the found array to add objects as a shoppingbasket
+                    for (int i = 0; i < ordersArray.length(); i++) {
+                        JSONObject shoppingbasket = ordersArray.getJSONObject(i);
 
                         // Restaurant JSON object
-                        String restaurantid = user.getString(TAG_ID);
-                        String name = user.getString(TAG_NAME);
+                        String restaurantid = shoppingbasket.getString(TAG_ID);
+                        String name = shoppingbasket.getString(TAG_NAME);
 
                         // tmp hashmap for single restaurant
                         HashMap<String, String> order_tmpmat = new HashMap<String, String>();
@@ -114,7 +117,8 @@ public class shoppingbasketactivity extends ListActivity {
 
                         // adding menu_tmpmat to menulist list
                         orderlist.add(order_tmpmat);
-                    }
+
+                    }*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -132,15 +136,15 @@ public class shoppingbasketactivity extends ListActivity {
                 pDialog.dismiss();
             // Updating parsed JSON data into ListView
             ListAdapter adapter = new SimpleAdapter(
-                    shoppingbasketactivity.this, orderlist,
+                    shoppingbasketactivity.this, sbasketlist,
 
-                    R.layout.sbasketlistlayout, new String[] { TAG_NAME, TAG_PRICE},
+                    R.layout.sbasketlistlayout, new String[] {"name", "price"},
                     new int[] { R.id.foodname, R.id.foodprice}
             );
 
             setListAdapter(adapter);
         }
-    }*/
+    }
 
 
 }
