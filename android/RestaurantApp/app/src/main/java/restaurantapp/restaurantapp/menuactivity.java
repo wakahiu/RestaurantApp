@@ -72,9 +72,6 @@ public class menuactivity extends ListActivity {
     private static final String TAG_PRICE = "price";
     private static final String TAG_CUISINE = "cuisine";
 
-    private String TAG_FOODNAME = "chosenfoodname";
-    private String TAG_FOODPRICE = "chosenfoodprice";
-
     // restaurants JSONArray & orders JSONArray
     JSONArray menuArray = null;
 
@@ -85,7 +82,7 @@ public class menuactivity extends ListActivity {
     Integer orderresponsecode;
 
     // String Initialization
-    String chosenname,chosenprice;
+    String chosenfoodname,chosenfoodprice, chosenfoodid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,14 +109,15 @@ public class menuactivity extends ListActivity {
 
         // Listview on item click listener
         lv.setOnItemClickListener(new OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // getting values from selected ListItem to HTTP POST
-                chosenname = ((TextView) view.findViewById(R.id.foodname))
+                chosenfoodname = ((TextView) view.findViewById(R.id.foodname))
                         .getText().toString();
-                chosenprice = ((TextView) view.findViewById(R.id.foodprice))
+                chosenfoodprice = ((TextView) view.findViewById(R.id.foodprice))
+                        .getText().toString();
+                chosenfoodid = ((TextView) view.findViewById(R.id.foodid))
                         .getText().toString();
 
                 new PostOrders().execute();
@@ -165,7 +163,7 @@ public class menuactivity extends ListActivity {
                         JSONObject user = menuArray.getJSONObject(i);
 
                         // Restaurant JSON object
-                        String restaurantid = user.getString(TAG_ID);
+                        String foodid = user.getString(TAG_ID);
                         String name = user.getString(TAG_NAME);
                         String price = user.getString(TAG_PRICE);
                         String cuisine = user.getString(TAG_CUISINE);
@@ -174,7 +172,7 @@ public class menuactivity extends ListActivity {
                         HashMap<String, String> menu_tmpmat = new HashMap<String, String>();
 
                         // adding each child node to HashMap key => value
-                        menu_tmpmat.put(TAG_ID, restaurantid);
+                        menu_tmpmat.put(TAG_ID, foodid);
                         menu_tmpmat.put(TAG_NAME, name);
                         menu_tmpmat.put(TAG_PRICE, price);
                         menu_tmpmat.put(TAG_CUISINE,cuisine);
@@ -201,8 +199,8 @@ public class menuactivity extends ListActivity {
             ListAdapter adapter = new SimpleAdapter(
                     menuactivity.this, menulist,
 
-                    R.layout.menuitemlist, new String[] { TAG_NAME, TAG_PRICE, TAG_CUISINE },
-                    new int[] { R.id.foodname, R.id.foodprice, R.id.cuisine}
+                    R.layout.menuitemlist, new String[] { TAG_NAME, TAG_PRICE, TAG_CUISINE, TAG_ID },
+                    new int[] { R.id.foodname, R.id.foodprice, R.id.cuisine, R.id.foodid}
             );
 
             setListAdapter(adapter);
@@ -228,8 +226,8 @@ public class menuactivity extends ListActivity {
                 // Compose the JSON object.
                 JSONObject jsonObj = new JSONObject();
                 List<String> menuItemIdList = new ArrayList<String>();
-                menuItemIdList.add("5651bde8b6798a8c11ee65fb");
-                menuItemIdList.add("5651bdc3b6798a8c11ee65fa");
+                menuItemIdList.add(chosenfoodid);
+                //menuItemIdList.add("5651bdc3b6798a8c11ee65fa");
                 jsonObj.put("menuItemIdList", new JSONArray(menuItemIdList));
                 Log.d(logPrefix, jsonObj.toString());
 
@@ -259,6 +257,7 @@ public class menuactivity extends ListActivity {
                 // if there is a response code AND that response code is 200 OK, do
                 // stuff in the first if block
                 orderresponsecode = urlConnection.getResponseCode();
+                Log.e("orderresponsecode",orderresponsecode.toString());
                 Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
                 if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     // OK
@@ -282,7 +281,7 @@ public class menuactivity extends ListActivity {
 
                     Log.w(logPrefix, sb.toString());
                     */
-                    Log.w(logPrefix, "" + urlConnection.getResponseCode());
+                    Log.e(logPrefix, "" + urlConnection.getResponseCode());
                 }
 
             } catch (MalformedURLException exception) {

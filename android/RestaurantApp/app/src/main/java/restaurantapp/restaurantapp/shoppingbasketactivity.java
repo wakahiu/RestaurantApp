@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class shoppingbasketactivity extends ListActivity {
     // progress dialog is initiated while fetching data from server
@@ -28,17 +29,17 @@ public class shoppingbasketactivity extends ListActivity {
 
     // JSONArrays
     JSONArray orderIDArray = null;
-
+    JSONArray IDmenuitems = null;
     // JSONObjs
     JSONObject IDfoundObj;
 
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> sbasketlist;
-
+    // tmp hashmap for this specific order
+    HashMap<String, String> order_tmpmap = new HashMap<String, String>();
     // Strings
-    String TAG_ID = "_id";
-    String ID2look4 = "5658c6a7496fdda406d59f13";
-    String IDfoundObjtxt;
+    String ID2look4 = "565a9ff2dcdbac2015e7b84a";
+    String IDfoundObjtxt, compareresult;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,12 @@ public class shoppingbasketactivity extends ListActivity {
         new GetShoppingBasket().execute();
     }
 
-    /** Async task class to get json by making HTTP call**/
+    /**
+     * Async task class to get json by making HTTP call
+     **/
     private class GetShoppingBasket extends AsyncTask<Void, Void, Void> {
 
-        /*@Override
+        @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog as data is fetched
@@ -59,7 +62,7 @@ public class shoppingbasketactivity extends ListActivity {
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
-        }*/
+        }
 
         @Override
         protected Void doInBackground(Void... arg0) {
@@ -77,19 +80,35 @@ public class shoppingbasketactivity extends ListActivity {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // search within found JSONObject to get the array with (specific name)
-                    orderIDArray = jsonObj.getJSONArray(TAG_ID);
+                    orderIDArray = jsonObj.getJSONArray("orders");
 
                     for (int i = 0; i < orderIDArray.length(); i++) {
                         IDfoundObj = orderIDArray.getJSONObject(i);
-                        IDfoundObjtxt = IDfoundObj.toString();
-
-                        if (ID2look4 == IDfoundObjtxt) {
-                            JSONObject ordereditemslist = IDfoundObj.getJSONObject("menuItems");
-                            String oitemname = ordereditemslist.getString("name");
-                            String oitemprice = ordereditemslist.getString("price");
-
-                            // tmp hashmap for this specific order
-                            HashMap<String,String> order_tmpmap = new HashMap<String, String>();
+                        //
+                        Log.d("1stArray", orderIDArray.toString());
+                        //
+                        IDfoundObjtxt = IDfoundObj.get("_id").toString();
+                        //
+                        Log.d("1stArrayString", IDfoundObjtxt);
+                        //
+                        Log.d("ArrayStringCompare", ID2look4);
+                        //
+                        if (IDfoundObjtxt == ID2look4) {
+                            compareresult = "true";
+                        }
+                    }
+                    if (compareresult == "true") {
+                        IDmenuitems = IDfoundObj.getJSONArray("menuItems");
+                        //
+                        Log.d("2ndArray", IDmenuitems.toString());
+                        //
+                        for (int j = 0; j < IDmenuitems.length(); j++) {
+                            JSONObject menuitemobjs = IDmenuitems.getJSONObject(j);
+                            //
+                            Log.d("1stObj", menuitemobjs.toString());
+                            //
+                            String oitemname = menuitemobjs.getString("name");
+                            String oitemprice = menuitemobjs.getString("price");
 
                             // add value to each key
                             order_tmpmap.put("name", oitemname);
@@ -97,28 +116,9 @@ public class shoppingbasketactivity extends ListActivity {
 
                             // add order_tmpmap to sbasket master list
                             sbasketlist.add(order_tmpmap);
-                            }
                         }
-                    /*
-                    // loop through the found array to add objects as a shoppingbasket
-                    for (int i = 0; i < ordersArray.length(); i++) {
-                        JSONObject shoppingbasket = ordersArray.getJSONObject(i);
+                    }
 
-                        // Restaurant JSON object
-                        String restaurantid = shoppingbasket.getString(TAG_ID);
-                        String name = shoppingbasket.getString(TAG_NAME);
-
-                        // tmp hashmap for single restaurant
-                        HashMap<String, String> order_tmpmat = new HashMap<String, String>();
-
-                        // adding each child node to HashMap key => value
-                        order_tmpmat.put(TAG_ID, restaurantid);
-                        order_tmpmat.put(TAG_NAME, name);
-
-                        // adding menu_tmpmat to menulist list
-                        orderlist.add(order_tmpmat);
-
-                    }*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -138,10 +138,9 @@ public class shoppingbasketactivity extends ListActivity {
             ListAdapter adapter = new SimpleAdapter(
                     shoppingbasketactivity.this, sbasketlist,
 
-                    R.layout.sbasketlistlayout, new String[] {"name", "price"},
-                    new int[] { R.id.foodname, R.id.foodprice}
+                    R.layout.sbasketlistlayout, new String[]{"name", "price"},
+                    new int[]{R.id.foodname, R.id.foodprice}
             );
-
             setListAdapter(adapter);
         }
     }
