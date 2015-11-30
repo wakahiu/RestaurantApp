@@ -6,24 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    >
+    android:paddingRight="15dp">
+
+    <TextView
+        android:id="@+id/sbaskettitle"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your order basket"
+        android:textSize="30sp" />
 
     <ListView
         android:id="@android:id/list"
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
+        android:layout_below="@+id/sbaskettitle"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+
         />
 
     <Button
         android:id="@+id/purchase"
 
-        android:layout_below="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@android:id/list"
         android:layout_marginTop="10dp"
         android:text="Purchase"
         android:textStyle="bold" />
@@ -31,9 +40,9 @@
     <Button
         android:id="@+id/cancel"
 
-        android:layout_below="@+id/purchase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/purchase"
         android:layout_marginTop="10dp"
         android:text="Cancel"
         android:textStyle="bold" />

@@ -15,6 +15,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+
     <TextView
         android:id="@+id/foodprice"
 
@@ -36,5 +37,15 @@
         android:paddingBottom="3dp"
         android:textColor="#acacac"
         android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/foodid"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cuisine"
+        android:textColor="#FFFFFF"
+        android:textSize="0.05sp"
+        />
 
 </RelativeLayout>
