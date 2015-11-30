@@ -272,20 +272,6 @@ public class menuactivity extends ListActivity {
                     // code is returned, do stuff in the else block
                 } else {
                     // Server returned HTTP error code.
-                    /*
-                    StringBuilder sb = new StringBuilder();
-                    InputStreamReader inputStreamReader =
-                            new InputStreamReader(urlConnection.getInputStream(),"utf-8");
-                    BufferedReader br = new BufferedReader(inputStreamReader);
-                    String line = null;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-
-                    br.close();
-
-                    Log.w(logPrefix, sb.toString());
-                    */
                     Log.w(logPrefix, "" + urlConnection.getResponseCode());
                 }
 
