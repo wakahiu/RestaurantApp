@@ -81,6 +81,7 @@ public class shoppingbasketactivity extends ListActivity {
 
                     // search within found JSONObject to get the array with (specific name)
                     orderIDArray = jsonObj.getJSONArray("orders");
+                    boolean IDfoundObjText = false;
 
                     for (int i = 0; i < orderIDArray.length(); i++) {
                         IDfoundObj = orderIDArray.getJSONObject(i);
@@ -93,11 +94,13 @@ public class shoppingbasketactivity extends ListActivity {
                         //
                         Log.d("ArrayStringCompare", ID2look4);
                         //
-                        if (IDfoundObjtxt == ID2look4) {
+                        if (IDfoundObjtxt.equals(ID2look4)) {
                             compareresult = "true";
-                        }
+                            IDfoundObjText = true;
+                            break;
+                        } // Handle the Else case to null objects?
                     }
-                    if (compareresult == "true") {
+                    if (IDfoundObjText) {
                         IDmenuitems = IDfoundObj.getJSONArray("menuItems");
                         //
                         Log.d("2ndArray", IDmenuitems.toString());
