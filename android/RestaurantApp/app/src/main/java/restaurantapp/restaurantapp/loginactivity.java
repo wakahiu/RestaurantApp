@@ -172,7 +172,7 @@ public class loginactivity extends Activity {
                 Log.d("email tag", TAG_EMAIL);
                 Log.d("password name", passwordtxt);
                 Log.d("password tag",TAG_PASSWORD);
-                Log.e("isStaff",isStafftxt);
+                //Log.e("isStaff", isStafftxt);
             } catch (UnsupportedEncodingException err) {
                 // writing error to Log
                 err.printStackTrace();
@@ -196,9 +196,11 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
+                Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
+                startActivity(forward2restaurantintent);
                 if ( isStaff == false ) {
-                    Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
-                    startActivity(forward2restaurantintent);
+                    //Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
+                    //startActivity(forward2restaurantintent);
                 } else {
                 }
             } else {
