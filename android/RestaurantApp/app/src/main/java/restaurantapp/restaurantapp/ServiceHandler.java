@@ -71,6 +71,7 @@ public class ServiceHandler {
             response = EntityUtils.toString(httpEntity);
             responsecode = httpResponse.getStatusLine().getStatusCode();
             // Log the results for debugging  information
+            Log.d("Get Response", response.toString());
             Log.e("httpEntity",httpEntity.toString());
             Log.e("Status Code",responsecode.toString());
 
