@@ -143,7 +143,8 @@ public class loginactivity extends Activity {
                 HttpEntity httpEntity = response.getEntity();
                 responsecode = response.getStatusLine().getStatusCode();
                 // Log the results for debugging  information
-                Log.e("httpEntity",httpEntity.toString());
+                // Yo
+                Log.e("httpEntity", httpEntity.toString());
                 Log.e("Status Code",responsecode.toString());
                 Log.d("email name", emailtxt);
                 Log.d("email tag", TAG_EMAIL);
