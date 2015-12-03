@@ -41,14 +41,13 @@ import android.os.AsyncTask;
 
 public class loginactivity extends Activity {
     EditText email,password;
-    Button login,registerbutton,loginBypass, loginStaff;
-    String emailtxt,passwordtxt, isStafftxt;
+    Button login,registerbutton,loginBypass;
+    String emailtxt,passwordtxt;
     Integer responsecode;
-    Boolean isStaff;
+    Boolean authenticated = false;
 
     private static final String TAG_EMAIL = "email";
     private static final String TAG_PASSWORD = "password";
-    private static final String TAG_Staff = "isStaff";
     // server URL
     private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user/authenticate";
 
@@ -62,7 +61,6 @@ public class loginactivity extends Activity {
         login = (Button)findViewById(R.id.log_in_button);
         registerbutton = (Button)findViewById(R.id.register);
         loginBypass = (Button)findViewById(R.id.loginBypass);
-        loginStaff = ( Button ) findViewById( R.id.loginStaff );
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,9 +70,6 @@ public class loginactivity extends Activity {
                 password = (EditText)findViewById(R.id.password);
                 emailtxt = email.getText().toString().toLowerCase();
                 passwordtxt = password.getText().toString();
-                isStaff = false;
-                isStafftxt = isStaff.toString();
-
                 Log.e("emailtxt3",emailtxt);
                 Log.e("passwordtxt3",passwordtxt);
 
@@ -88,24 +83,6 @@ public class loginactivity extends Activity {
 
                 emailtxt = "test@fake.com";
                 passwordtxt = "888iii$$$III";
-
-                new PostUserCredential().execute();
-            }
-        });
-
-        loginStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // User input texts
-                email = (EditText)findViewById(R.id.email);
-                password = (EditText)findViewById(R.id.password);
-                emailtxt = email.getText().toString().toLowerCase();
-                passwordtxt = password.getText().toString();
-                isStaff = true;
-                isStafftxt = isStaff.toString();
-
-                Log.e("emailtxt3",emailtxt);
-                Log.e("passwordtxt3",passwordtxt);
 
                 new PostUserCredential().execute();
             }
@@ -136,6 +113,7 @@ public class loginactivity extends Activity {
             public void onClick(View view) {
                 Intent registerintent = new Intent(loginactivity.this,registeractivity.class);
                 startActivity(registerintent);
+
             }
         });
     }
@@ -157,7 +135,6 @@ public class loginactivity extends Activity {
                 // add the new information into nameValuePairs
                 nameValuePairs.add(new BasicNameValuePair(TAG_EMAIL, emailtxt));
                 nameValuePairs.add(new BasicNameValuePair(TAG_PASSWORD, passwordtxt));
-                nameValuePairs.add ( new BasicNameValuePair( TAG_Staff, isStafftxt ) );
 
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "utf-8"));
 
@@ -167,12 +144,11 @@ public class loginactivity extends Activity {
                 responsecode = response.getStatusLine().getStatusCode();
                 // Log the results for debugging  information
                 Log.e("httpEntity",httpEntity.toString());
-                Log.e("Status Code", responsecode.toString());
+                Log.e("Status Code",responsecode.toString());
                 Log.d("email name", emailtxt);
                 Log.d("email tag", TAG_EMAIL);
                 Log.d("password name", passwordtxt);
                 Log.d("password tag",TAG_PASSWORD);
-                //Log.e("isStaff", isStafftxt);
             } catch (UnsupportedEncodingException err) {
                 // writing error to Log
                 err.printStackTrace();
@@ -196,13 +172,9 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
-                Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
+                Intent forward2restaurantintent = new Intent(loginactivity.this,restaurantactivity.class);
                 startActivity(forward2restaurantintent);
-                if ( isStaff == false ) {
-                    //Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
-                    //startActivity(forward2restaurantintent);
-                } else {
-                }
+                finish();
             } else {
                 Toast.makeText(loginactivity.this, "Failed login. Please try again!",Toast.LENGTH_LONG).show();
             }

@@ -3,14 +3,19 @@ package restaurantapp.restaurantapp;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,16 +35,24 @@ public class shoppingbasketactivity extends ListActivity {
     // JSONArrays
     JSONArray orderIDArray = null;
     JSONArray IDmenuitems = null;
+
     // JSONObjs
     JSONObject IDfoundObj;
+    JSONObject IDorder;
 
     // Hashmap for ListView
-    ArrayList<HashMap<String, String>> sbasketlist;
+    ArrayList<HashMap<String, String>> sbasketlist = new ArrayList<HashMap<String, String>>();
     // tmp hashmap for this specific order
     HashMap<String, String> order_tmpmap = new HashMap<String, String>();
     // Strings
     String ID2look4 = "565a9ff2dcdbac2015e7b84a";
-    String IDfoundObjtxt, compareresult;
+    String IDfoundObjtxt, oitemname, oitemprice, ordertotalcosttxt;
+    // int
+    int index = 0;
+    // buttons
+    Button purchasebtn, cancelorderbtn;
+    // TextView
+    TextView ordertotalcost;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,35 @@ public class shoppingbasketactivity extends ListActivity {
         setContentView(R.layout.shoppingbasketlayout);
 
         new GetShoppingBasket().execute();
+
+        purchasebtn = (Button)findViewById(R.id.purchase);
+        cancelorderbtn = (Button) findViewById(R.id.cancel);
+        ordertotalcost = (TextView)findViewById(R.id.totalcost);
+
+        purchasebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ordertotalcosttxt = ordertotalcost.getText().toString();
+
+                if (ordertotalcosttxt.equals("0.00"))
+                {
+                    Toast.makeText(shoppingbasketactivity.this, "Please add order!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent purchaseintent = new Intent(shoppingbasketactivity.this, paymentactivity.class);
+                    startActivity(purchaseintent);
+                    finish();
+                }
+            }
+        });
+        cancelorderbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cancelorderintent = new Intent(shoppingbasketactivity.this, menuactivity.class);
+                startActivity(cancelorderintent);
+            }
+        });
+
+
     }
 
     /**
@@ -76,12 +118,12 @@ public class shoppingbasketactivity extends ListActivity {
 
             if (jsonStr != null) {
                 try {
+                    Boolean compareresult = false;
                     // initialize a JSONObject from the GET response entity
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // search within found JSONObject to get the array with (specific name)
                     orderIDArray = jsonObj.getJSONArray("orders");
-                    boolean IDfoundObjText = false;
 
                     for (int i = 0; i < orderIDArray.length(); i++) {
                         IDfoundObj = orderIDArray.getJSONObject(i);
@@ -91,28 +133,32 @@ public class shoppingbasketactivity extends ListActivity {
                         IDfoundObjtxt = IDfoundObj.get("_id").toString();
                         //
                         Log.d("1stArrayString", IDfoundObjtxt);
-                        //
                         Log.d("ArrayStringCompare", ID2look4);
                         //
                         if (IDfoundObjtxt.equals(ID2look4)) {
-                            compareresult = "true";
-                            IDfoundObjText = true;
-                            break;
-                        } // Handle the Else case to null objects?
+                            compareresult = true;
+                            index = i;
+                        }
                     }
-                    if (IDfoundObjText) {
-                        IDmenuitems = IDfoundObj.getJSONArray("menuItems");
+                    // if desired ID object is found
+                    if (compareresult.equals(true)) {
+                        IDorder = orderIDArray.getJSONObject(index);
+                        IDmenuitems = IDorder.getJSONArray("menuItems");
+                        //IDmenuitems = IDfoundObj.getJSONArray("menuItems");
                         //
-                        Log.d("2ndArray", IDmenuitems.toString());
+                        Log.d("ID order Obj", IDorder.toString());
+                        Log.d("ID menuitem array", IDmenuitems.toString());
                         //
                         for (int j = 0; j < IDmenuitems.length(); j++) {
                             JSONObject menuitemobjs = IDmenuitems.getJSONObject(j);
                             //
-                            Log.d("1stObj", menuitemobjs.toString());
+                            Log.d("menuItems Obj", menuitemobjs.toString());
                             //
-                            String oitemname = menuitemobjs.getString("name");
-                            String oitemprice = menuitemobjs.getString("price");
-
+                            oitemname = menuitemobjs.get("name").toString();
+                            oitemprice = menuitemobjs.get("price").toString();
+                            //
+                            Log.d("oitemname",oitemname);
+                            Log.d("oitemprice",oitemprice);
                             // add value to each key
                             order_tmpmap.put("name", oitemname);
                             order_tmpmap.put("price", oitemprice);

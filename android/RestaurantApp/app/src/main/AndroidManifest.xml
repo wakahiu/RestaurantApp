@@ -24,6 +24,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".paymentactivity"
+            android:label="paymode"></activity>
+
+        <activity
             android:name=".registeractivity"
             android:label="registermode"></activity>
         <activity

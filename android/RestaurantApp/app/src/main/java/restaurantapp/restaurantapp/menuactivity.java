@@ -58,9 +58,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class menuactivity extends ListActivity {
-    FloatingActionButton fab; // floating action button
+    // fab initialization
+    FloatingActionButton fab, fab2goback; // floating action button
+    // Progress dialog
     private ProgressDialog pDialog; //progress dialog for testing purposes
-
     // server URL
     private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/menu";
     private static URL orderURL = null;
@@ -71,16 +72,12 @@ public class menuactivity extends ListActivity {
     private static final String TAG_NAME = "name";
     private static final String TAG_PRICE = "price";
     private static final String TAG_CUISINE = "cuisine";
-
     // restaurants JSONArray & orders JSONArray
     JSONArray menuArray = null;
-
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> menulist;
-
     // orderresponsecode initialization
     Integer orderresponsecode;
-
     // String Initialization
     String chosenfoodname,chosenfoodprice, chosenfoodid;
 
@@ -89,17 +86,24 @@ public class menuactivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menulistlayout);
 
-        // Shared preference
-        //final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         // find the fab in the layout
         fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab2goback = (FloatingActionButton)findViewById(R.id.fab2goback);
+
         // set on click action for fab
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
                 startActivity(sbasketintent);
+            }
+        });
+        // set on click action for fab2goback
+        fab2goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent backtorestaurantintent = new Intent(menuactivity.this, restaurantactivity.class);
+                startActivity(backtorestaurantintent);
             }
         });
 
