@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <TextView
+        android:id="@+id/staffordertitle"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Orders to prepare"
+        android:textSize="35sp" />
+
+    <ListView
+        android:id="@android:id/list"
+
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/staffordertitle"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
