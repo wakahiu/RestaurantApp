@@ -153,7 +153,7 @@ public class loginactivity extends Activity {
 
             try {
                 // Initialize List
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 // add the new information into nameValuePairs
                 nameValuePairs.add(new BasicNameValuePair(TAG_EMAIL, emailtxt));
                 nameValuePairs.add(new BasicNameValuePair(TAG_PASSWORD, passwordtxt));
