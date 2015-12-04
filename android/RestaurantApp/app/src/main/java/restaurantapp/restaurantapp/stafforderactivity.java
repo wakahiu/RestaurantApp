@@ -13,12 +13,15 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class stafforderactivity extends ListActivity {
     // progress dialog is initiated while fetching data from server
@@ -45,11 +48,14 @@ public class stafforderactivity extends ListActivity {
     // int
     int index = 0;
 
+    String emailtxt;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stafforderlayout);
 
+        emailtxt = getIntent().getExtras().getString("email");
         new GetShoppingBasket().execute();
 
     }
@@ -74,8 +80,12 @@ public class stafforderactivity extends ListActivity {
             // Creating service handler class instance
             ServiceHandler sh = new ServiceHandler();
 
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("email", emailtxt));
+
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
+            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET, nameValuePairs );
 
             Log.e("Response: ", "> " + jsonStr);
 
@@ -151,6 +161,7 @@ public class stafforderactivity extends ListActivity {
                     stafforderactivity.this, sbasketlist,
 
                     R.layout.sbasketlistlayout, new String[]{"name", "price"},
+
                     new int[]{R.id.foodname, R.id.foodprice}
             );
             setListAdapter(adapter);

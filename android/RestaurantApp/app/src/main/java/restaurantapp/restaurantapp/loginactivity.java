@@ -191,6 +191,7 @@ public class loginactivity extends Activity {
         }
 
         @Override
+
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
@@ -201,7 +202,8 @@ public class loginactivity extends Activity {
                     startActivity(forward2restaurantintent);
                 } else {
                     Intent forward2stafforderintent = new Intent(loginactivity.this, stafforderactivity.class);
-                    startActivity(forward2stafforderintent);
+                    forward2stafforderintent.putExtra( "email", emailtxt );
+                    startActivity( forward2stafforderintent );
                 }
             } else {
                 Toast.makeText(loginactivity.this, "Failed login. Please try again!",Toast.LENGTH_LONG).show();
