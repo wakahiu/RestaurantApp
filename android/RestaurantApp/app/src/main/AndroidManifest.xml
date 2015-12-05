@@ -34,6 +34,8 @@
             android:name=".shoppingbasketactivity"
             android:label="sbasketmode"></activity>
         <activity
+            android:name=".stafforderactivity"
+            android:label="sbasketmode"></activity>        <activity
             android:name=".menuactivity"
             android:label="menumode"></activity>
         <activity
