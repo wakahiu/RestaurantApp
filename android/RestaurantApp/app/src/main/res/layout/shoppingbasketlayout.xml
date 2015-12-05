@@ -9,7 +9,7 @@
     android:paddingRight="15dp">
 
     <TextView
-        android:id="@+id/sbaskettitle"
+        android:id="@+id/staffordertitle"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_below="@+id/sbaskettitle"
+        android:layout_below="@+id/staffordertitle"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
 

@@ -50,6 +50,8 @@ public class stafforderactivity extends ListActivity {
 
     String emailtxt;
 
+    Button procedded;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,10 +162,37 @@ public class stafforderactivity extends ListActivity {
             ListAdapter adapter = new SimpleAdapter(
                     stafforderactivity.this, sbasketlist,
 
-                    R.layout.sbasketlistlayout, new String[]{"name", "price"},
+                    R.layout.stafforderlistlayout, new String[]{"name", "price"},
+
+
+//                    procedded.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            ordertotalcosttxt = ordertotalcost.getText().toString();
+//
+//                            if (ordertotalcosttxt.equals("0.00"))
+//                            {
+//                                Toast.makeText(shoppingbasketactivity.this, "Please add order!", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                Intent purchaseintent = new Intent(shoppingbasketactivity.this, paymentactivity.class);
+//                                startActivity(purchaseintent);
+//                                finish();
+//                            }
+//                        }
+//                    });
+
 
                     new int[]{R.id.foodname, R.id.foodprice}
             );
+//            procedded = (Button)findViewById(R.id.proceed_button);
+//
+//            procedded.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
+
             setListAdapter(adapter);
         }
     }
