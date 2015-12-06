@@ -40,6 +40,9 @@ import java.util.List;
 import android.os.AsyncTask;
 
 public class loginactivity extends Activity {
+    //
+    Bundle passthis = new Bundle();
+    //
     EditText email,password;
     Button login,registerbutton,loginBypass, loginStaff;
     String emailtxt,passwordtxt, isStafftxt;
@@ -172,7 +175,7 @@ public class loginactivity extends Activity {
                 Log.d("email tag", TAG_EMAIL);
                 Log.d("password name", passwordtxt);
                 Log.d("password tag",TAG_PASSWORD);
-                Log.e("isStaff", isStafftxt);
+                //Log.e("isStaff", isStafftxt);
             } catch (UnsupportedEncodingException err) {
                 // writing error to Log
                 err.printStackTrace();
@@ -197,14 +200,18 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
-                if ( isStaff == false ) {
+               // if ( false ) {
                     Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
+                    passthis.putString("currentuseremail",emailtxt);
+                    forward2restaurantintent.putExtras(passthis);
                     startActivity(forward2restaurantintent);
-                } else {
+                    finish();
+                /*} else {
                     Intent forward2stafforderintent = new Intent(loginactivity.this, stafforderactivity.class);
                     forward2stafforderintent.putExtra( "email", emailtxt );
                     startActivity( forward2stafforderintent );
-                }
+                    finish();
+                }*/
             } else {
                 Toast.makeText(loginactivity.this, "Failed login. Please try again!",Toast.LENGTH_LONG).show();
             }

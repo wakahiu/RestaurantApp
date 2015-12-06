@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -24,6 +25,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class restaurantactivity extends ListActivity {
+    // pull things from Intent and putExtra
+    Intent intent=this.getIntent();
 
     //progress dialog for testing purposes
     private ProgressDialog pDialog;
@@ -40,10 +43,16 @@ public class restaurantactivity extends ListActivity {
     JSONArray restaurants = null;
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> restaurantlist;
+    // String
+    String extra1, currentuseremail;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (intent != null){
+            extra1 = getIntent().getStringExtra("currentuseremail");
+        }
+
         setContentView(R.layout.restaurantlistlayout);
 
         //components for testing purposes

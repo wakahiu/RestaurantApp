@@ -39,6 +39,10 @@ public class paymentactivity extends Activity{
 
                 Toast.makeText(paymentactivity.this, "Payment Successful!", Toast.LENGTH_LONG).show();
 
+                Intent buycompleteintent = new Intent(paymentactivity.this, shoppingbasketactivity.class);
+                startActivity(buycompleteintent);
+                finish();
+
             }
         });
 
@@ -47,6 +51,7 @@ public class paymentactivity extends Activity{
             public void onClick(View view) {
                 Intent cancelbuyintent = new Intent(paymentactivity.this, shoppingbasketactivity.class);
                 startActivity(cancelbuyintent);
+                finish();
             }
 
         });

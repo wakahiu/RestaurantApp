@@ -49,6 +49,8 @@ public class shoppingbasketactivity extends ListActivity {
     String IDfoundObjtxt, oitemname, oitemprice, ordertotalcosttxt;
     // int
     int index = 0;
+    int oitempriceint = 0;
+    int oitempriceinttotal = 0;
     // buttons
     Button purchasebtn, cancelorderbtn;
     // TextView
@@ -64,6 +66,8 @@ public class shoppingbasketactivity extends ListActivity {
         purchasebtn = (Button)findViewById(R.id.purchase);
         cancelorderbtn = (Button) findViewById(R.id.cancel);
         ordertotalcost = (TextView)findViewById(R.id.totalcost);
+
+        ordertotalcost.setText(String.valueOf(oitempriceinttotal));
 
         purchasebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +89,7 @@ public class shoppingbasketactivity extends ListActivity {
             public void onClick(View view) {
                 Intent cancelorderintent = new Intent(shoppingbasketactivity.this, menuactivity.class);
                 startActivity(cancelorderintent);
+                finish();
             }
         });
 
@@ -149,6 +154,7 @@ public class shoppingbasketactivity extends ListActivity {
                         Log.d("ID order Obj", IDorder.toString());
                         Log.d("ID menuitem array", IDmenuitems.toString());
                         //
+
                         for (int j = 0; j < IDmenuitems.length(); j++) {
                             JSONObject menuitemobjs = IDmenuitems.getJSONObject(j);
                             //
@@ -156,12 +162,14 @@ public class shoppingbasketactivity extends ListActivity {
                             //
                             oitemname = menuitemobjs.get("name").toString();
                             oitemprice = menuitemobjs.get("price").toString();
+                            oitempriceint = menuitemobjs.getInt("price");
                             //
                             Log.d("oitemname",oitemname);
                             Log.d("oitemprice",oitemprice);
                             // add value to each key
                             order_tmpmap.put("name", oitemname);
                             order_tmpmap.put("price", oitemprice);
+                            oitempriceinttotal += oitempriceint;
 
                             // add order_tmpmap to sbasket master list
                             sbasketlist.add(order_tmpmap);
@@ -190,6 +198,10 @@ public class shoppingbasketactivity extends ListActivity {
                     R.layout.sbasketlistlayout, new String[]{"name", "price"},
                     new int[]{R.id.foodname, R.id.foodprice}
             );
+            //
+            Log.d("oitempriceinttotal",String.valueOf(oitempriceinttotal));
+            //
+
             setListAdapter(adapter);
         }
     }
