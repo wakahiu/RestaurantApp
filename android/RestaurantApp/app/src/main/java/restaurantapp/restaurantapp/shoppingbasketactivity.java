@@ -51,6 +51,8 @@ public class shoppingbasketactivity extends ListActivity {
     int index = 0;
     int oitempriceint = 0;
     int oitempriceinttotal = 0;
+    int oitempricehold = 0;
+
     // buttons
     Button purchasebtn, cancelorderbtn;
     // TextView
@@ -169,7 +171,8 @@ public class shoppingbasketactivity extends ListActivity {
                             // add value to each key
                             order_tmpmap.put("name", oitemname);
                             order_tmpmap.put("price", oitemprice);
-                            oitempriceinttotal += oitempriceint;
+                            oitempriceinttotal = oitempricehold + oitempriceint;
+                            oitempricehold = oitempriceinttotal;
 
                             // add order_tmpmap to sbasket master list
                             sbasketlist.add(order_tmpmap);

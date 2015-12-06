@@ -297,12 +297,12 @@ public class menuactivity extends ListActivity {
 
             if  (orderresponsecode.equals(201)) {
                 Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
+                //GetUserID().execute();
             } else {
                 Toast.makeText(menuactivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }
-
     /*
     private class GetUserID extends AsyncTask<Void, Void, Void> {
 
@@ -318,7 +318,7 @@ public class menuactivity extends ListActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
 
-            Log.e("Response: ", "> " + jsonStr);
+            Log.e("GetUserID response: ", "> " + jsonStr);
 
             if (jsonStr != null) {
                 try {
