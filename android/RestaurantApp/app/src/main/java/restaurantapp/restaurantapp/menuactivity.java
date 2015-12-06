@@ -1,61 +1,38 @@
 package restaurantapp.restaurantapp;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.PasswordAuthentication;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class menuactivity extends ListActivity {
     // fab initialization
@@ -233,7 +210,6 @@ public class menuactivity extends ListActivity {
                 JSONObject jsonObj = new JSONObject();
                 List<String> menuItemIdList = new ArrayList<String>();
                 menuItemIdList.add(chosenfoodid);
-                //menuItemIdList.add("5651bdc3b6798a8c11ee65fa");
                 jsonObj.put("menuItemIdList", new JSONArray(menuItemIdList));
                 Log.d(logPrefix, jsonObj.toString());
 
@@ -260,6 +236,16 @@ public class menuactivity extends ListActivity {
                 writer.flush();
                 writer.close();
 
+                StringBuffer sb = new StringBuffer();
+                InputStream is = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String inputLine = "";
+                while ((inputLine = br.readLine()) != null) {
+                    sb.append(inputLine);
+                }
+                String result = sb.toString();
+                Log.d("Order result",result);
+
                 // if there is a response code AND that response code is 200 OK, do
                 // stuff in the first if block
                 orderresponsecode = urlConnection.getResponseCode();
@@ -268,8 +254,7 @@ public class menuactivity extends ListActivity {
                 Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
                 if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     // OK
-                    Log.d(getClass().getEnclosingClass().getName(),
-                            urlConnection.getResponseMessage());
+                    Log.d(logPrefix, urlConnection.getResponseMessage());
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
                 } else {

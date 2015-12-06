@@ -1,18 +1,14 @@
 package restaurantapp.restaurantapp;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +19,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class shoppingbasketactivity extends ListActivity {
     // progress dialog is initiated while fetching data from server
@@ -51,6 +46,7 @@ public class shoppingbasketactivity extends ListActivity {
     int index = 0;
     int oitempriceint = 0;
     int oitempriceinttotal = 0;
+    int oitempricehold = 0;
     // buttons
     Button purchasebtn, cancelorderbtn;
     // TextView
@@ -165,11 +161,12 @@ public class shoppingbasketactivity extends ListActivity {
                             oitempriceint = menuitemobjs.getInt("price");
                             //
                             Log.d("oitemname",oitemname);
-                            Log.d("oitemprice",oitemprice);
+                            Log.d("oitemprice", oitemprice);
                             // add value to each key
                             order_tmpmap.put("name", oitemname);
                             order_tmpmap.put("price", oitemprice);
-                            oitempriceinttotal += oitempriceint;
+                            oitempriceinttotal = oitempricehold + oitempriceint;
+                            oitempricehold = oitempriceinttotal;
 
                             // add order_tmpmap to sbasket master list
                             sbasketlist.add(order_tmpmap);

@@ -1,14 +1,11 @@
 package restaurantapp.restaurantapp;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,8 +33,6 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.os.AsyncTask;
 
 public class loginactivity extends Activity {
     //
