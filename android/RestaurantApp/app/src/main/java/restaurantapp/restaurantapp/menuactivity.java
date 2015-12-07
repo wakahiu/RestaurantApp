@@ -251,6 +251,7 @@ public class menuactivity extends ListActivity {
                 orderresponsecode = urlConnection.getResponseCode();
                 //
                 Log.d("orderresponsecode",orderresponsecode.toString());
+                //
                 Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
                 if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     // OK

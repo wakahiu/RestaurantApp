@@ -195,7 +195,7 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
-               // if ( false ) {
+               // if ( isstfftxt.equals("false ) {
                     Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
                     passthis.putString("currentuseremail",emailtxt);
                     forward2restaurantintent.putExtras(passthis);
