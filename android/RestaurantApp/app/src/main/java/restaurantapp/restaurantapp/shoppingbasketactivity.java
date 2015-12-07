@@ -3,6 +3,7 @@ package restaurantapp.restaurantapp;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +41,8 @@ public class shoppingbasketactivity extends ListActivity {
     // tmp hashmap for this specific order
     HashMap<String, String> order_tmpmap = new HashMap<String, String>();
     // Strings
-    String ID2look4 = "565a9ff2dcdbac2015e7b84a";
+    //String ID2look4 = "565a9ff2dcdbac2015e7b84a";
+    String ID2look4 = null;
     String IDfoundObjtxt, oitemname, oitemprice, ordertotalcosttxt;
     // int
     int index = 0;
@@ -48,7 +50,6 @@ public class shoppingbasketactivity extends ListActivity {
     int oitempriceinttotal = 0;
     int oitempricehold = 0;
 
-    int ordertime;
     // buttons
     Button purchasebtn, cancelorderbtn;
     // TextView
@@ -58,12 +59,24 @@ public class shoppingbasketactivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shoppingbasketlayout);
+        // intialize font
+        final Typeface sbasketfont = Typeface.createFromAsset(getAssets(),"txtfont1.ttf");
+
+        // pull things from Intent that had putExtra
+        Intent frommenuintent = this.getIntent();
+        // get the value of key from intent's extra
+        if (frommenuintent != null){
+            ID2look4 = getIntent().getStringExtra("chosenorderID"); // "chosenorderID"is the name of the restaurant chosen by the user
+        }
 
         new GetShoppingBasket().execute();
 
         purchasebtn = (Button)findViewById(R.id.purchase);
+        purchasebtn.setTypeface(sbasketfont);
         cancelorderbtn = (Button) findViewById(R.id.cancel);
+        cancelorderbtn.setTypeface(sbasketfont);
         ordertotalcost = (TextView)findViewById(R.id.totalcost);
+        ordertotalcost.setTypeface(sbasketfont);
 
         ordertotalcost.setText(String.valueOf(oitempriceinttotal));
 
@@ -90,8 +103,6 @@ public class shoppingbasketactivity extends ListActivity {
                 finish();
             }
         });
-
-
     }
 
     /**

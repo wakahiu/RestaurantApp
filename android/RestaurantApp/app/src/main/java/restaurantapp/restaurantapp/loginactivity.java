@@ -38,7 +38,7 @@ import java.util.List;
 
 public class loginactivity extends Activity {
     //
-    Bundle passthis = new Bundle();
+    Bundle passthis2restaurant = new Bundle();
     //
     EditText email,password;
     Button login,registerbutton,loginBypass, loginStaff;
@@ -57,6 +57,7 @@ public class loginactivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginlayout);
+        // intialize font
         final Typeface loginfont = Typeface.createFromAsset(getAssets(),"txtfont1.ttf");
         // title & set font type
         loginmaintitle = (TextView)findViewById(R.id.loginpagetitle);
@@ -208,8 +209,8 @@ public class loginactivity extends Activity {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
                // if ( isstfftxt.equals("false ) {
                     Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
-                    passthis.putString("currentuseremail",emailtxt);
-                    forward2restaurantintent.putExtras(passthis);
+                    passthis2restaurant.putString("currentuseremail",emailtxt);
+                    forward2restaurantintent.putExtras(passthis2restaurant);
                     startActivity(forward2restaurantintent);
                     finish();
                 /*} else {
