@@ -1,3 +1,20 @@
 # Node packages #
 */node_modules/
 */data/
+
+# iOS
+.DS_Store
+Pods/
+Podfile.lock
+xcuserdata/
+*.xcworkspace/
+	
+# Android
+google-services.json
+
+*.gradle
+*.aar
+*.iml
+*.jks
+*.apk
+

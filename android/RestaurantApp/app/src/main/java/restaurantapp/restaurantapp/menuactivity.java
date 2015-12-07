@@ -253,7 +253,7 @@ public class menuactivity extends ListActivity {
                     // OK
                     JSONObject jasonResultObject = new JSONObject(result);
                     JSONObject jasonOrderObject = jasonResultObject.getJSONObject("order");
-                    String orderId = jasonOrderObject.getString("_id");
+                        String orderId = jasonOrderObject.getString("_id");
                     Log.d(logPrefix, orderId);
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
