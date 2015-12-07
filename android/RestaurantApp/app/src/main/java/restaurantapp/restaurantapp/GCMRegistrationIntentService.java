@@ -13,12 +13,12 @@ import com.google.android.gms.iid.InstanceID;
 
 import java.io.IOException;
 
-public class RegistrationIntentService extends IntentService {
+public class GCMRegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
 
-    public RegistrationIntentService() {
+    public GCMRegistrationIntentService() {
         super(TAG);
     }
 
