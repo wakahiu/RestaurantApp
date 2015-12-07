@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    >
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/mainmenutitle"
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Restaurant name"
+        android:textSize="35sp"
+        android:textColor="@color/colorText"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_below="@id/mainmenutitle"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:fitsSystemWindows="true"
+        tools:context=".MainActivity">
+
+
+        <ListView
+            android:id="@android:id/list"
+
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
 
-    </android.support.design.widget.AppBarLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            app:backgroundTint="#FFFFFF"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ycart" />
 
-    <ListView
-        android:id="@android:id/list"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab2goback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            app:backgroundTint="#FFFFFF"
+            android:layout_marginTop="@dimen/fab2goback_verticalmargin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/yback" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="@dimen/abc_action_bar_default_height_material" />
+    </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ycart" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2goback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="@dimen/fab2goback_verticalmargin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:src="@drawable/yback" />
-
-</android.support.design.widget.CoordinatorLayout>

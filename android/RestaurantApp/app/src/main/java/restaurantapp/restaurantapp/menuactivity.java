@@ -246,16 +246,10 @@ public class menuactivity extends ListActivity {
                 // if there is a response code AND that response code is 200 OK, do
                 // stuff in the first if block
                 orderresponsecode = urlConnection.getResponseCode();
-<<<<<<< HEAD
-                //
-                Log.d("orderresponsecode",orderresponsecode.toString());
-                //
-                Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
-                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-=======
+
                 Log.d(logPrefix, orderresponsecode.toString());
                 if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
->>>>>>> origin/master
+
                     // OK
                     JSONObject jasonResultObject = new JSONObject(result);
                     JSONObject jasonOrderObject = jasonResultObject.getJSONObject("order");

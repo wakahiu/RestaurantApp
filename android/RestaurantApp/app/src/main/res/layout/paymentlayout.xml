@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-
-    android:layout_gravity="center"
+    android:background="@color/colorBackground"
+    android:gravity="center"
     android:paddingLeft="40dp"
     android:paddingRight="40dp"
-    android:paddingBottom="25dp">
+    >
 
     <TextView
         android:id="@+id/paymentdetailtitle"
@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Please enter your payment details."
-        android:textSize="30sp"
+        android:textColor="@color/colorText"
+        android:textSize="35sp"
         android:paddingBottom="10dp"/>
 
     <EditText
@@ -76,20 +77,26 @@
     <Button
         android:id="@+id/paynowbtn"
 
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:text="Make Payment"/>
+        android:background="@drawable/buttonshape"
+        android:text="Make Payment"
+        android:textColor="@color/colorText"/>
 
     <Button
         android:id="@+id/cancelpaymentbtn"
 
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:text="Cancel"/>
+        android:background="@drawable/buttonshape"
+        android:text="Cancel"
+        android:textColor="@color/colorText"/>
 
 
 

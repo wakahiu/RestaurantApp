@@ -6,6 +6,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
 
+    android:background="@color/colorBackground"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:weightSum="5"
@@ -20,6 +21,7 @@
         android:layout_weight="2"
         android:gravity="center"
         android:text="Diner Mate"
+        android:textColor="@color/colorText"
         android:textSize="63sp" />
 
     <EditText
@@ -28,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_email"
+        android:textColor="@color/colorText"
         android:inputType="textEmailAddress"
         android:singleLine="true"
         android:textSize="25sp" />
@@ -38,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_password"
+        android:textColor="@color/colorText"
         android:imeActionId="@+id/login"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionUnspecified"
@@ -55,23 +59,31 @@
 
         <Button
             android:id="@+id/log_in_button"
+
+            android:background="@drawable/buttonshape"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_weight="3"
             android:text="@string/action_sign_in"
-            android:textStyle="bold" />
+            android:textColor="@color/colorText"
+            />
 
         <Button
             android:id="@+id/register"
+
+            android:background="@drawable/buttonshape"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_weight="3"
-            android:text="@string/action_register" />
+            android:text="@string/action_register"
+            android:textColor="@color/colorText"
+            />
 
         <Button
             android:id="@+id/loginStaff"
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"

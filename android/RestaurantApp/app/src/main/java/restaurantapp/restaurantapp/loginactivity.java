@@ -3,6 +3,7 @@ package restaurantapp.restaurantapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -43,6 +45,7 @@ public class loginactivity extends Activity {
     String emailtxt,passwordtxt, isStafftxt;
     Integer responsecode;
     Boolean isStaff;
+    TextView loginmaintitle;
 
     private static final String TAG_EMAIL = "email";
     private static final String TAG_PASSWORD = "password";
@@ -54,20 +57,28 @@ public class loginactivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginlayout);
-
-
-        // Buttons
+        final Typeface loginfont = Typeface.createFromAsset(getAssets(),"txtfont1.ttf");
+        // title & set font type
+        loginmaintitle = (TextView)findViewById(R.id.loginpagetitle);
+        loginmaintitle.setTypeface(loginfont);
+        // Buttons & set font type
         login = (Button)findViewById(R.id.log_in_button);
+        login.setTypeface(loginfont);
         registerbutton = (Button)findViewById(R.id.register);
+        registerbutton.setTypeface(loginfont);
         loginBypass = (Button)findViewById(R.id.loginBypass);
+        loginBypass.setTypeface(loginfont);
         loginStaff = ( Button ) findViewById( R.id.loginStaff );
+        loginStaff.setTypeface(loginfont);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // User input texts
+                // User input texts, set Typeface and get user input
                 email = (EditText)findViewById(R.id.email);
+                email.setTypeface(loginfont);
                 password = (EditText)findViewById(R.id.password);
+                password.setTypeface(loginfont);
                 emailtxt = email.getText().toString().toLowerCase();
                 passwordtxt = password.getText().toString();
                 isStaff = false;

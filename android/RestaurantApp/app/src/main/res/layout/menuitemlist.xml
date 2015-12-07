@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="3dp"
-        android:textColor="#43bd00"
+        android:textColor="#F2BE3A"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -24,7 +25,7 @@
         android:layout_below="@+id/foodname"
         android:paddingBottom="3dp"
         android:paddingTop="3dp"
-        android:textColor="#43bd00"
+        android:textColor="#F2BE3A"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/foodprice"
         android:paddingBottom="3dp"
-        android:textColor="#acacac"
+        android:textColor="#FFFFFF"
         android:textSize="15sp" />
 
     <TextView
@@ -44,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cuisine"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorBackground"
         android:textSize="0.05sp"
         />
 
