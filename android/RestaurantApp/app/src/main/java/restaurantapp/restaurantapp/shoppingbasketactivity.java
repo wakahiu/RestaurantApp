@@ -47,6 +47,8 @@ public class shoppingbasketactivity extends ListActivity {
     int oitempriceint = 0;
     int oitempriceinttotal = 0;
     int oitempricehold = 0;
+
+    int ordertime;
     // buttons
     Button purchasebtn, cancelorderbtn;
     // TextView
@@ -70,7 +72,7 @@ public class shoppingbasketactivity extends ListActivity {
             public void onClick(View view) {
                 ordertotalcosttxt = ordertotalcost.getText().toString();
 
-                if (ordertotalcosttxt.equals("0.00"))
+                if (ordertotalcosttxt.equals("0"))
                 {
                     Toast.makeText(shoppingbasketactivity.this, "Please add order!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -198,7 +200,7 @@ public class shoppingbasketactivity extends ListActivity {
             //
             Log.d("oitempriceinttotal",String.valueOf(oitempriceinttotal));
             //
-
+            ordertotalcost.setText(String.valueOf(oitempriceinttotal));
             setListAdapter(adapter);
         }
     }
