@@ -34,15 +34,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class menuactivity extends ListActivity {
+public class MenuActivity extends ListActivity {
     // fab initialization
     FloatingActionButton fab, fab2goback; // floating action button
     // Progress dialog
     private ProgressDialog pDialog; //progress dialog for testing purposes
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/menu";
+    private static String url = Util.rootUrl + "/menu";
     private static URL orderURL = null;
-    private static String orderUrlStr = "http://dinnermate.azurewebsites.net/api/v1.0/order";
+    private static String orderUrlStr = Util.rootUrl + "/order";
     // JSON Node names
     private static final String TAG_MENU = "menuItems";
     private static final String TAG_ID = "_id";
@@ -71,7 +71,7 @@ public class menuactivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
+                Intent sbasketintent = new Intent(MenuActivity.this, shoppingbasketactivity.class);
                 startActivity(sbasketintent);
                 finish();
             }
@@ -80,11 +80,13 @@ public class menuactivity extends ListActivity {
         fab2goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent backtorestaurantintent = new Intent(menuactivity.this, restaurantactivity.class);
+                Intent backtorestaurantintent = new Intent(MenuActivity.this, restaurantactivity.class);
                 startActivity(backtorestaurantintent);
                 finish();
             }
         });
+        Intent mServiceIntent = new Intent(this, GCMRegistrationIntentService.class);
+        startService(mServiceIntent);
 
         //initialize menu list and get list view
         menulist = new ArrayList<HashMap<String, String>>();
@@ -104,6 +106,8 @@ public class menuactivity extends ListActivity {
                         .getText().toString();
 
                 new PostOrders().execute();
+                //Intent mServiceIntent = new Intent(getActivity(), GCMRegistrationIntentService.class);
+                //getActivity().startService(mServiceIntent);
             }
         });
 
@@ -118,7 +122,7 @@ public class menuactivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(menuactivity.this);
+            pDialog = new ProgressDialog(MenuActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -178,7 +182,7 @@ public class menuactivity extends ListActivity {
                 pDialog.dismiss();
             /** Updating parsed JSON data into ListView **/
             ListAdapter adapter = new SimpleAdapter(
-                    menuactivity.this, menulist,
+                    MenuActivity.this, menulist,
 
                     R.layout.menuitemlist, new String[] { TAG_NAME, TAG_PRICE, TAG_CUISINE, TAG_ID },
                     new int[] { R.id.foodname, R.id.foodprice, R.id.cuisine, R.id.foodid}
@@ -281,10 +285,10 @@ public class menuactivity extends ListActivity {
             super.onPostExecute(result);
 
             if  (orderresponsecode.equals(201)) {
-                Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, "Order added", Toast.LENGTH_LONG).show();
                 //GetUserID().execute();
             } else {
-                Toast.makeText(menuactivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }

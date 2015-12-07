@@ -29,7 +29,7 @@
             the service is only available to this app.
         -->
         <service
-            android:name=".RegistrationIntentService"
+            android:name=".GCMRegistrationIntentService"
             android:exported="false"/>
 
         <activity
@@ -59,7 +59,7 @@
             android:label="sbasketmode">
         </activity>
         <activity
-            android:name=".menuactivity"
+            android:name=".MenuActivity"
             android:label="menumode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,14 +70,6 @@
         <activity
             android:name=".restaurantactivity"
             android:label="restaurantlistmode">
-        </activity>
-        <activity
-            android:name=".testmodeactivity2"
-            android:label="testmode2">
-        </activity>
-        <activity
-            android:name=".testmodeactivity"
-            android:label="testmode">
         </activity>
     </application>
 

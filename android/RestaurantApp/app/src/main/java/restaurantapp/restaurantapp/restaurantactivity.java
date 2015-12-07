@@ -27,7 +27,7 @@ public class restaurantactivity extends ListActivity {
     //progress dialog for testing purposes
     private ProgressDialog pDialog;
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/restaurant";
+    private static String url = Util.rootUrl + "/restaurant";
     // JSON Node names
     private static final String TAG_RESTAURANTS = "restaurants";
     private static final String TAG_ID = "_id";
@@ -59,24 +59,8 @@ public class restaurantactivity extends ListActivity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            /*@Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // getting values from selected ListItem
-                String firstname = ((TextView) view.findViewById(R.id.firstname)).getText().toString();
-                String lastname = ((TextView) view.findViewById(R.id.lastname)).getText().toString();
-                String email = ((TextView) view.findViewById(R.id.email)).getText().toString();
-
-                // Starting single contact activity
-                Intent in = new Intent(getApplicationContext(),SingleContactActivity.class);
-                in.putExtra(TAG_FIRSTNAME, firstname);
-                in.putExtra(TAG_LASTNAME, lastname);
-                in.putExtra(TAG_EMAIL, email);
-                startActivity(in);*/
-
-                Intent restaurantlistintent = new Intent(getApplicationContext(), menuactivity.class);
+                Intent restaurantlistintent = new Intent(getApplicationContext(), MenuActivity.class);
                 startActivity(restaurantlistintent);
-
             }
         });
 
