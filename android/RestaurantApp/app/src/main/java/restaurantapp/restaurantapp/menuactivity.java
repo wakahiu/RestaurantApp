@@ -132,8 +132,6 @@ public class menuactivity extends ListActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
 
-            Log.d("Response: ", ">\n" + jsonStr);
-
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -211,7 +209,6 @@ public class menuactivity extends ListActivity {
                 List<String> menuItemIdList = new ArrayList<String>();
                 menuItemIdList.add(chosenfoodid);
                 jsonObj.put("menuItemIdList", new JSONArray(menuItemIdList));
-                Log.d(logPrefix, jsonObj.toString());
 
                 orderURL = new URL(orderUrlStr);
                 urlConnection = (HttpURLConnection) orderURL.openConnection();
@@ -221,7 +218,7 @@ public class menuactivity extends ListActivity {
                 urlConnection.setAllowUserInteraction(false);
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 urlConnection.setRequestProperty("Accept", "application/json");
-                urlConnection.setRequestProperty("Authorization","Basic " + basicAuth);
+                urlConnection.setRequestProperty("Authorization", "Basic " + basicAuth);
                 urlConnection.setChunkedStreamingMode(0);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.connect();
@@ -244,22 +241,23 @@ public class menuactivity extends ListActivity {
                     sb.append(inputLine);
                 }
                 String result = sb.toString();
-                Log.d("Order result",result);
+
 
                 // if there is a response code AND that response code is 200 OK, do
                 // stuff in the first if block
                 orderresponsecode = urlConnection.getResponseCode();
-                //
-                Log.d("orderresponsecode",orderresponsecode.toString());
-                Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
-                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                Log.d(logPrefix, orderresponsecode.toString());
+                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
                     // OK
-                    Log.d(logPrefix, urlConnection.getResponseMessage());
+                    JSONObject jasonResultObject = new JSONObject(result);
+                    JSONObject jasonOrderObject = jasonResultObject.getJSONObject("order");
+                    String orderId = jasonOrderObject.getString("_id");
+                    Log.d(logPrefix, orderId);
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
                 } else {
                     // Server returned HTTP error code.
-                    Log.w(logPrefix, "" + urlConnection.getResponseCode());
+                    Log.w(logPrefix, "" + urlConnection.getResponseMessage());
                 }
 
             } catch (MalformedURLException exception) {
@@ -288,93 +286,4 @@ public class menuactivity extends ListActivity {
             }
         }
     }
-    /*
-    private class GetUserID extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
-
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-
-            Log.e("GetUserID response: ", "> " + jsonStr);
-
-            if (jsonStr != null) {
-                try {
-                    Boolean compareresult = false;
-                    // initialize a JSONObject from the GET response entity
-                    JSONObject jsonObj = new JSONObject(jsonStr);
-
-                    // search within found JSONObject to get the array with (specific name)
-                    orderIDArray = jsonObj.getJSONArray("orders");
-
-                    for (int i = 0; i < orderIDArray.length(); i++) {
-                        IDfoundObj = orderIDArray.getJSONObject(i);
-                        //
-                        Log.d("1stArray", orderIDArray.toString());
-                        //
-                        IDfoundObjtxt = IDfoundObj.get("_id").toString();
-                        //
-                        Log.d("1stArrayString", IDfoundObjtxt);
-                        Log.d("ArrayStringCompare", ID2look4);
-                        //
-                        if (IDfoundObjtxt.equals(ID2look4)) {
-                            compareresult = true;
-                            index = i;
-                        }
-                    }
-                    // if desired ID object is found
-                    if (compareresult.equals(true)) {
-                        IDorder = orderIDArray.getJSONObject(index);
-                        IDmenuitems = IDorder.getJSONArray("menuItems");
-                        //IDmenuitems = IDfoundObj.getJSONArray("menuItems");
-                        //
-                        Log.d("ID order Obj", IDorder.toString());
-                        Log.d("ID menuitem array", IDmenuitems.toString());
-                        //
-
-                        for (int j = 0; j < IDmenuitems.length(); j++) {
-                            JSONObject menuitemobjs = IDmenuitems.getJSONObject(j);
-                            //
-                            Log.d("menuItems Obj", menuitemobjs.toString());
-                            //
-                            oitemname = menuitemobjs.get("name").toString();
-                            oitemprice = menuitemobjs.get("price").toString();
-                            oitempriceint = menuitemobjs.getInt("price");
-                            //
-                            Log.d("oitemname",oitemname);
-                            Log.d("oitemprice",oitemprice);
-                            // add value to each key
-                            order_tmpmap.put("name", oitemname);
-                            order_tmpmap.put("price", oitemprice);
-                            oitempriceinttotal += oitempriceint;
-
-                            // add order_tmpmap to sbasket master list
-                            sbasketlist.add(order_tmpmap);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Log.e("ServiceHandler", "Couldn't get any data from the url");
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            //
-        }
-    } // end the Asynctask of GetUserID
-    */
-
 }// end menuactivity
