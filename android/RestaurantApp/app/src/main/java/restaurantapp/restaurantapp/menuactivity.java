@@ -3,6 +3,7 @@ package restaurantapp.restaurantapp;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -34,45 +36,82 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MenuActivity extends ListActivity {
+public class menuactivity extends ListActivity {
+    // initialize bundle that will be sent to the basket
+    Bundle passthis2sbasket = new Bundle();
+
     // fab initialization
     FloatingActionButton fab, fab2goback; // floating action button
+
     // Progress dialog
     private ProgressDialog pDialog; //progress dialog for testing purposes
+
     // server URL
     private static String url = Util.rootUrl + "/menu";
     private static URL orderURL = null;
+
     private static String orderUrlStr = Util.rootUrl + "/order";
+
     // JSON Node names
     private static final String TAG_MENU = "menuItems";
     private static final String TAG_ID = "_id";
     private static final String TAG_NAME = "name";
     private static final String TAG_PRICE = "price";
     private static final String TAG_CUISINE = "cuisine";
+
     // restaurants JSONArray & orders JSONArray
     JSONArray menuArray = null;
+
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> menulist;
+
     // orderresponsecode initialization
     Integer orderresponsecode;
+
     // String Initialization
-    String chosenfoodname,chosenfoodprice, chosenfoodid, orderresponsemsg;
+    String chosenfoodname,chosenfoodprice, chosenfoodid, extrarestaurantname, orderId;
+
+    // TextView
+    TextView menumaintitle;
+
+    // int
+    int j  = 0;
+
+    //Intent
+    Intent restaurant2menuintent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        restaurant2menuintent = new Intent(getApplicationContext(), shoppingbasketactivity.class);
+        // set the layout i want to see
         setContentView(R.layout.menulistlayout);
+        // pull things from Intent that had putExtra
+        Intent fromrestaurantintent = this.getIntent();
+        // get the value of key from intent's extra
+        if (fromrestaurantintent != null){
+            extrarestaurantname = getIntent().getStringExtra("chosenrestaurant"); // chosenrestaurant is the name of the restaurant chosen by the user
+        //    Log.d("extra rest name", extrarestaurantname);
+        }
+
+        // intialize font
+        final Typeface menufont = Typeface.createFromAsset(getAssets(),"txtfont1.ttf");
 
         // find the fab in the layout
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab2goback = (FloatingActionButton)findViewById(R.id.fab2goback);
+        // find the textview
+        menumaintitle = (TextView)findViewById(R.id.mainmenutitle);
+        menumaintitle.setTypeface(menufont);
 
         // set on click action for fab
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sbasketintent = new Intent(MenuActivity.this, shoppingbasketactivity.class);
-                startActivity(sbasketintent);
+
+                //Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
+                startActivity(restaurant2menuintent);
+
                 finish();
             }
         });
@@ -86,6 +125,9 @@ public class MenuActivity extends ListActivity {
             }
         });
 
+        // set textview title using the restaurant name sent from restaurant activity
+        menumaintitle.setText(extrarestaurantname);
+
         //initialize menu list and get list view
         menulist = new ArrayList<HashMap<String, String>>();
         ListView lv = getListView();
@@ -98,6 +140,7 @@ public class MenuActivity extends ListActivity {
                 // getting values from selected ListItem to HTTP POST
                 chosenfoodname = ((TextView) view.findViewById(R.id.foodname))
                         .getText().toString();
+
                 chosenfoodprice = ((TextView) view.findViewById(R.id.foodprice))
                         .getText().toString();
                 chosenfoodid = ((TextView) view.findViewById(R.id.foodid))
@@ -106,6 +149,7 @@ public class MenuActivity extends ListActivity {
                 new PostOrders().execute();
                 //Intent mServiceIntent = new Intent(getActivity(), GCMRegistrationIntentService.class);
                 //getActivity().startService(mServiceIntent);
+
             }
         });
 
@@ -255,12 +299,16 @@ public class MenuActivity extends ListActivity {
                     // OK
                     JSONObject jasonResultObject = new JSONObject(result);
                     JSONObject jasonOrderObject = jasonResultObject.getJSONObject("order");
-                        String orderId = jasonOrderObject.getString("_id");
-                    Log.d(logPrefix, orderId);
+
+                    orderId = jasonOrderObject.getString("_id");
+
+                    // log order ID for debugging
+                    Log.d("order ID", orderId);
+
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
                 } else {
-                    // Server returned HTTP error code.
+                    // Server returned HTTP error code description.
                     Log.w(logPrefix, "" + urlConnection.getResponseMessage());
                 }
 
@@ -283,8 +331,10 @@ public class MenuActivity extends ListActivity {
             super.onPostExecute(result);
 
             if  (orderresponsecode.equals(201)) {
-                Toast.makeText(MenuActivity.this, "Order added", Toast.LENGTH_LONG).show();
-                //GetUserID().execute();
+                passthis2sbasket.putString("chosenorderID",orderId);
+                restaurant2menuintent.putExtras(passthis2sbasket);
+                Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
+
             } else {
                 Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
             }

@@ -14,7 +14,7 @@
         android:layout_marginRight="15dp"
         android:text="Restaurant name"
         android:textSize="35sp"
-        android:textColor="@color/colorText"/>
+        android:textColor="@color/colorText" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_below="@id/mainmenutitle"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        android:fitsSystemWindows="true"
+
         tools:context=".MainActivity">
 
 
@@ -34,26 +34,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            />
+            android:layout_marginRight="5dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:layout_gravity="bottom|end"
             app:backgroundTint="#FFFFFF"
-            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab2goback_verticalmargin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+
             android:src="@drawable/ycart" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab2goback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:layout_gravity="bottom|end"
             app:backgroundTint="#FFFFFF"
-            android:layout_marginTop="@dimen/fab2goback_verticalmargin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/yback" />
 
     </android.support.design.widget.CoordinatorLayout>

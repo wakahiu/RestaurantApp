@@ -21,9 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class restaurantactivity extends ListActivity {
-    // pull things from Intent and putExtra
-    Intent intent=this.getIntent();
-
+    //
+    Bundle passthis2menu = new Bundle();
     //progress dialog for testing purposes
     private ProgressDialog pDialog;
     // server URL
@@ -40,17 +39,18 @@ public class restaurantactivity extends ListActivity {
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> restaurantlist;
     // String
-    String extra1, currentuseremail;
+    String extra1, restaurantname;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.restaurantlistlayout);
+
+        // pull things from Intent and putExtra
+        Intent intent=this.getIntent();
         if (intent != null){
             extra1 = getIntent().getStringExtra("currentuseremail");
         }
-
-        setContentView(R.layout.restaurantlistlayout);
-
         //components for testing purposes
         restaurantlist = new ArrayList<HashMap<String, String>>();
         ListView lv = getListView();
@@ -59,8 +59,14 @@ public class restaurantactivity extends ListActivity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent restaurantlistintent = new Intent(getApplicationContext(), MenuActivity.class);
-                startActivity(restaurantlistintent);
+
+                passthis2menu.putString("chosenrestaurant",restaurantname);
+                Log.d("resta name",restaurantname);
+                Intent restaurant2menuintent = new Intent(getApplicationContext(), menuactivity.class);
+                restaurant2menuintent.putExtras(passthis2menu);
+                startActivity(restaurant2menuintent);
+                finish();
+
             }
         });
 
@@ -100,21 +106,21 @@ public class restaurantactivity extends ListActivity {
 
                     // looping through All users
                     for (int i = 0; i < restaurants.length(); i++) {
-                        JSONObject user = restaurants.getJSONObject(i);
+                        JSONObject restaurantinfo = restaurants.getJSONObject(i);
 
                         // Restaurant JSON object
-                        String restaurantid = user.getString(TAG_ID);
-                        String name = user.getString(TAG_NAME);
-                        String address = user.getString(TAG_ADDRESS);
-                        String city = user.getString(TAG_CITY);
-                        String cuisine = user.getString(TAG_CUISINE);
+                        String restaurantid = restaurantinfo.getString(TAG_ID);
+                        restaurantname = restaurantinfo.getString(TAG_NAME);
+                        String address = restaurantinfo.getString(TAG_ADDRESS);
+                        String city = restaurantinfo.getString(TAG_CITY);
+                        String cuisine = restaurantinfo.getString(TAG_CUISINE);
 
                         // tmp hashmap for single restaurant
                         HashMap<String, String> user_tmpmat = new HashMap<String, String>();
 
                         // adding each child node to HashMap key => value
                         user_tmpmat.put(TAG_ID, restaurantid);
-                        user_tmpmat.put(TAG_NAME, name);
+                        user_tmpmat.put(TAG_NAME, restaurantname);
                         user_tmpmat.put(TAG_ADDRESS, address);
                         user_tmpmat.put(TAG_CITY, city);
                         user_tmpmat.put(TAG_CUISINE,cuisine);
