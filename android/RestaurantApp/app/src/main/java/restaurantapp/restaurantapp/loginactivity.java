@@ -71,6 +71,11 @@ public class loginactivity extends Activity {
         loginStaff = ( Button ) findViewById( R.id.loginStaff );
         loginStaff.setTypeface(loginfont);
 
+        // Start an intent for the GCM Registration. This generates tokens in the background.
+        // GCM ensures that orders and invoices are received continuously the background.
+        Intent gcmServiceIntent = new Intent(this, GCMRegistrationIntentService.class);
+        startService(gcmServiceIntent);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

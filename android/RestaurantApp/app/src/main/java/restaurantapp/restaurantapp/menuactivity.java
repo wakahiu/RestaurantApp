@@ -85,8 +85,6 @@ public class MenuActivity extends ListActivity {
                 finish();
             }
         });
-        Intent mServiceIntent = new Intent(this, GCMRegistrationIntentService.class);
-        startService(mServiceIntent);
 
         //initialize menu list and get list view
         menulist = new ArrayList<HashMap<String, String>>();
