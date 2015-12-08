@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class menuactivity extends ListActivity {
+public class MenuActivity extends ListActivity {
     // initialize bundle that will be sent to the basket
     Bundle passthis2sbasket = new Bundle();
 
@@ -333,7 +333,7 @@ public class menuactivity extends ListActivity {
             if  (orderresponsecode.equals(201)) {
                 passthis2sbasket.putString("chosenorderID",orderId);
                 restaurant2menuintent.putExtras(passthis2sbasket);
-                Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, "Order added", Toast.LENGTH_LONG).show();
 
             } else {
                 Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();

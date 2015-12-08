@@ -12,7 +12,6 @@ xcuserdata/
 # Android
 google-services.json
 
-*.gradle
 *.aar
 *.iml
 *.jks
