@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MenuActivity extends ListActivity {
     // initialize bundle that will be sent to the basket
-    Bundle passthis2sbasket = new Bundle();
+    Bundle passthis2basket = new Bundle();
 
     // fab initialization
     FloatingActionButton fab, fab2goback; // floating action button
@@ -69,23 +69,24 @@ public class MenuActivity extends ListActivity {
     Integer orderresponsecode;
 
     // String Initialization
-    String chosenfoodname,chosenfoodprice, chosenfoodid, extrarestaurantname, orderId;
+    String chosenfoodname,chosenfoodprice, chosenfoodid, extrarestaurantname, orderId, jtxt;
 
     // TextView
     TextView menumaintitle;
 
     // int
-    int j  = 0;
+    int j  = 1;
 
     //Intent
-    Intent restaurant2menuintent;
+    Intent menu2sbasketintent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        restaurant2menuintent = new Intent(getApplicationContext(), shoppingbasketactivity.class);
+        menu2sbasketintent = new Intent(getApplicationContext(), shoppingbasketactivity.class);
         // set the layout i want to see
         setContentView(R.layout.menulistlayout);
+
         // pull things from Intent that had putExtra
         Intent fromrestaurantintent = this.getIntent();
         // get the value of key from intent's extra
@@ -110,9 +111,9 @@ public class MenuActivity extends ListActivity {
             public void onClick(View view) {
 
                 //Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
-                startActivity(restaurant2menuintent);
+                startActivity(menu2sbasketintent);
+                j = 1;
 
-                finish();
             }
         });
         // set on click action for fab2goback
@@ -140,12 +141,10 @@ public class MenuActivity extends ListActivity {
                 // getting values from selected ListItem to HTTP POST
                 chosenfoodname = ((TextView) view.findViewById(R.id.foodname))
                         .getText().toString();
-
                 chosenfoodprice = ((TextView) view.findViewById(R.id.foodprice))
                         .getText().toString();
                 chosenfoodid = ((TextView) view.findViewById(R.id.foodid))
                         .getText().toString();
-
                 new PostOrders().execute();
                 //Intent mServiceIntent = new Intent(getActivity(), GCMRegistrationIntentService.class);
                 //getActivity().startService(mServiceIntent);
@@ -195,7 +194,9 @@ public class MenuActivity extends ListActivity {
                         String price = user.getString(TAG_PRICE);
                         String cuisine = user.getString(TAG_CUISINE);
 
+                        Log.d("foodid",foodid);
                         // tmp hashmap for single restaurant
+
                         HashMap<String, String> menu_tmpmat = new HashMap<String, String>();
 
                         // adding each child node to HashMap key => value
@@ -268,7 +269,9 @@ public class MenuActivity extends ListActivity {
                 urlConnection.setChunkedStreamingMode(0);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.connect();
-
+                //
+                Log.d("flags", "flag1");
+                //
                 // instantiate OutputStreamWriter using the output stream, returned
                 // from getOutputStream, that writes to this connection.
                 OutputStreamWriter writer = new OutputStreamWriter(
@@ -278,11 +281,25 @@ public class MenuActivity extends ListActivity {
 
                 writer.flush();
                 writer.close();
-
+                //
+                Log.d("flags", "flag2");
+                //
                 StringBuffer sb = new StringBuffer();
+                //
+                Log.d("flags", "flag2.1");
+                //
                 InputStream is = new BufferedInputStream(urlConnection.getInputStream());
+                //
+                Log.d("flags", "flag2.2");
+                //
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                //
+                Log.d("flags", "flag2.3");
+                //
                 String inputLine = "";
+                //
+                Log.d("flags", "flag3");
+                //
                 while ((inputLine = br.readLine()) != null) {
                     sb.append(inputLine);
                 }
@@ -292,8 +309,9 @@ public class MenuActivity extends ListActivity {
                 // if there is a response code AND that response code is 200 OK, do
                 // stuff in the first if block
                 orderresponsecode = urlConnection.getResponseCode();
-
-                Log.d(logPrefix, orderresponsecode.toString());
+                //
+                Log.d("orderresponsecode", orderresponsecode.toString());
+                //
                 if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
 
                     // OK
@@ -331,9 +349,21 @@ public class MenuActivity extends ListActivity {
             super.onPostExecute(result);
 
             if  (orderresponsecode.equals(201)) {
-                passthis2sbasket.putString("chosenorderID",orderId);
-                restaurant2menuintent.putExtras(passthis2sbasket);
-                Toast.makeText(MenuActivity.this, "Order added", Toast.LENGTH_LONG).show();
+
+                //passthis2basket.putString("restaurantname2basket",extrarestaurantname);
+                passthis2basket.putString("chosenorderID"+j,orderId);
+                //
+                Log.d("passthis2basket",passthis2basket.toString());
+                //
+                jtxt = String.valueOf(j);
+                //
+                Log.d("jtxt", jtxt);
+                //
+                passthis2basket.putString("jvalue", jtxt);
+                menu2sbasketintent.putExtras(passthis2basket);
+
+                Toast.makeText(MenuActivity.this, j + " order(s) added in total", Toast.LENGTH_LONG).show();
+                j = j + 1;
 
             } else {
                 Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();

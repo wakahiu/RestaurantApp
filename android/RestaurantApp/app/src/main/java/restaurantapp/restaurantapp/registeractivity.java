@@ -2,6 +2,7 @@ package restaurantapp.restaurantapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -38,6 +40,7 @@ public class registeractivity extends Activity {
     Integer responsecode;
     CheckBox staffindicator;
     Boolean staffboolean;
+    TextView regmaintitle;
 
     // server URL
     private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/user";
@@ -52,8 +55,15 @@ public class registeractivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registerlayout);
+        // intialize font
+        final Typeface regfont = Typeface.createFromAsset(getAssets(),"txtfont1.ttf");
+        //
         registerbtn = (Button) findViewById(R.id.registerbtn);
+        registerbtn.setTypeface(regfont);
         cancelbtn = (Button) findViewById(R.id.cancelbtn);
+        cancelbtn.setTypeface(regfont);
+        regmaintitle = (TextView) findViewById(R.id.registertitle);
+        regmaintitle.setTypeface(regfont);
 
         // Set Intent for Cancel button
         cancelbtn.setOnClickListener(new View.OnClickListener() {

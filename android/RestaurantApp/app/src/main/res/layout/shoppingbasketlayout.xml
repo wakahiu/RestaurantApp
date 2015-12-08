@@ -10,11 +10,11 @@
     android:paddingRight="15dp">
 
     <TextView
-        android:id="@+id/staffordertitle"
+        android:id="@+id/sbaskettitle"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your order basket"
+        android:text="Your orders"
         android:textColor="@color/colorText"
         android:textSize="35sp" />
 
@@ -22,8 +22,8 @@
         android:id="@android:id/list"
 
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_below="@+id/staffordertitle"
+        android:layout_height="405dp"
+        android:layout_below="@+id/sbaskettitle"
         android:background="@color/colorBackground"
         />
 
@@ -68,19 +68,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ordertotalholder"
         android:background="@drawable/buttonshape"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="Purchase"
         android:textColor="@color/colorText"/>
 
-    <Button
-        android:id="@+id/cancel"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/purchase"
-        android:background="@drawable/buttonshape"
-        android:layout_marginTop="10dp"
-        android:text="Cancel"
-        android:textColor="@color/colorText"/>
 
 </RelativeLayout>

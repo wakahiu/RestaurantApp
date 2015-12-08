@@ -12,6 +12,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +31,7 @@ public class restaurantactivity extends ListActivity {
     // JSON Node names
     private static final String TAG_RESTAURANTS = "restaurants";
     private static final String TAG_ID = "_id";
-    private static final String TAG_NAME = "name";
+    private static final String TAG_NAME = "displayName";
     private static final String TAG_ADDRESS = "address";
     private static final String TAG_CITY = "city";
     private static final String TAG_CUISINE = "cuisine";
@@ -39,7 +40,7 @@ public class restaurantactivity extends ListActivity {
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> restaurantlist;
     // String
-    String extra1, restaurantname;
+    String extra1,chosenrestaurantname;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +60,13 @@ public class restaurantactivity extends ListActivity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                passthis2menu.putString("chosenrestaurant",restaurantname);
-                Log.d("resta name",restaurantname);
+                chosenrestaurantname = ((TextView) view.findViewById(R.id.name))
+                        .getText().toString();
+                //
+                Log.d("chosenrestaurantname",chosenrestaurantname);
+                //
+                passthis2menu.putString("chosenrestaurant",chosenrestaurantname);
+                Log.d("resta name",chosenrestaurantname);
                 Intent restaurant2menuintent = new Intent(getApplicationContext(), MenuActivity.class);
                 restaurant2menuintent.putExtras(passthis2menu);
                 startActivity(restaurant2menuintent);
@@ -110,7 +115,7 @@ public class restaurantactivity extends ListActivity {
 
                         // Restaurant JSON object
                         String restaurantid = restaurantinfo.getString(TAG_ID);
-                        restaurantname = restaurantinfo.getString(TAG_NAME);
+                        String restaurantname = restaurantinfo.getString(TAG_NAME);
                         String address = restaurantinfo.getString(TAG_ADDRESS);
                         String city = restaurantinfo.getString(TAG_CITY);
                         String cuisine = restaurantinfo.getString(TAG_CUISINE);
