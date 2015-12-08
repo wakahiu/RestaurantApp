@@ -26,7 +26,7 @@ public class restaurantactivity extends ListActivity {
     //progress dialog for testing purposes
     private ProgressDialog pDialog;
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/restaurant";
+    private static String url = Util.rootUrl + "/restaurant";
     // JSON Node names
     private static final String TAG_RESTAURANTS = "restaurants";
     private static final String TAG_ID = "_id";
@@ -66,6 +66,7 @@ public class restaurantactivity extends ListActivity {
                 restaurant2menuintent.putExtras(passthis2menu);
                 startActivity(restaurant2menuintent);
                 finish();
+
             }
         });
 

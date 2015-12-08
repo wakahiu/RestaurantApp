@@ -98,7 +98,7 @@ public class shoppingbasketactivity extends ListActivity {
         cancelorderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelorderintent = new Intent(shoppingbasketactivity.this, menuactivity.class);
+                Intent cancelorderintent = new Intent(shoppingbasketactivity.this, MenuActivity.class);
                 startActivity(cancelorderintent);
                 finish();
             }

@@ -47,9 +47,10 @@ public class menuactivity extends ListActivity {
     private ProgressDialog pDialog; //progress dialog for testing purposes
 
     // server URL
-    private static String url = "http://dinnermate.azurewebsites.net/api/v1.0/menu";
+    private static String url = Util.rootUrl + "/menu";
     private static URL orderURL = null;
-    private static String orderUrlStr = "http://dinnermate.azurewebsites.net/api/v1.0/order";
+
+    private static String orderUrlStr = Util.rootUrl + "/order";
 
     // JSON Node names
     private static final String TAG_MENU = "menuItems";
@@ -107,8 +108,10 @@ public class menuactivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 //Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
                 startActivity(restaurant2menuintent);
+
                 finish();
             }
         });
@@ -116,11 +119,13 @@ public class menuactivity extends ListActivity {
         fab2goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent backtorestaurantintent = new Intent(menuactivity.this, restaurantactivity.class);
+                Intent backtorestaurantintent = new Intent(MenuActivity.this, restaurantactivity.class);
                 startActivity(backtorestaurantintent);
                 finish();
             }
         });
+        Intent mServiceIntent = new Intent(this, GCMRegistrationIntentService.class);
+        startService(mServiceIntent);
 
         // set textview title using the restaurant name sent from restaurant activity
         menumaintitle.setText(extrarestaurantname);
@@ -144,6 +149,8 @@ public class menuactivity extends ListActivity {
                         .getText().toString();
 
                 new PostOrders().execute();
+                //Intent mServiceIntent = new Intent(getActivity(), GCMRegistrationIntentService.class);
+                //getActivity().startService(mServiceIntent);
 
             }
         });
@@ -159,7 +166,7 @@ public class menuactivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(menuactivity.this);
+            pDialog = new ProgressDialog(MenuActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -219,7 +226,7 @@ public class menuactivity extends ListActivity {
                 pDialog.dismiss();
             /** Updating parsed JSON data into ListView **/
             ListAdapter adapter = new SimpleAdapter(
-                    menuactivity.this, menulist,
+                    MenuActivity.this, menulist,
 
                     R.layout.menuitemlist, new String[] { TAG_NAME, TAG_PRICE, TAG_CUISINE, TAG_ID },
                     new int[] { R.id.foodname, R.id.foodprice, R.id.cuisine, R.id.foodid}
@@ -294,10 +301,12 @@ public class menuactivity extends ListActivity {
                     // OK
                     JSONObject jasonResultObject = new JSONObject(result);
                     JSONObject jasonOrderObject = jasonResultObject.getJSONObject("order");
+
                     orderId = jasonOrderObject.getString("_id");
 
                     // log order ID for debugging
                     Log.d("order ID", orderId);
+
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
                 } else {
@@ -329,7 +338,7 @@ public class menuactivity extends ListActivity {
                 Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
 
             } else {
-                Toast.makeText(menuactivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }
