@@ -104,8 +104,13 @@ public class loginactivity extends Activity {
             @Override
             public void onClick(View view) {
 
+
+
                 emailtxt = "test@fake.com";
                 passwordtxt = "888iii$$$III";
+
+                emailtxt = "staff@gmail.com";
+                passwordtxt = "StaffPassw0rd";
 
                 new PostUserCredential().execute();
             }
@@ -187,7 +192,7 @@ public class loginactivity extends Activity {
                 ServiceHandler sh = new ServiceHandler();
                 String jsonStr = sh.makeServiceCall("http://dinnermate.azurewebsites.net/api/v1.0/user", ServiceHandler.GET, nameValuePairs);
 
-                Log.d("getResponse: ", ">\n" + jsonStr);
+                //Log.d("getResponse: ", ">\n" + jsonStr);
 
                 if (jsonStr != null) {
                     try {
@@ -214,13 +219,13 @@ public class loginactivity extends Activity {
 
 
                 // Log the results for debugging  information
-                Log.e("respond: ", response.toString());
+/*                Log.e("respond: ", response.toString());
                 Log.e("httpEntity",httpEntity.toString());
                 Log.e("Status Code", responsecode.toString());
                 Log.d("email name", emailtxt);
                 Log.d("email tag", TAG_EMAIL);
                 Log.d("password name", passwordtxt);
-                Log.d("password tag",TAG_PASSWORD);
+                Log.d("password tag",TAG_PASSWORD);*/
                 //Log.e("isStaff", isStafftxt);
             } catch (UnsupportedEncodingException err) {
                 // writing error to Log
