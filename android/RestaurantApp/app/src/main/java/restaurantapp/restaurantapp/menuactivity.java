@@ -47,10 +47,11 @@ public class MenuActivity extends ListActivity {
     private ProgressDialog pDialog; //progress dialog for testing purposes
 
     // server URL
-    private static String url = Util.rootUrl + "/menu";
-    private static URL orderURL = null;
-
+    private static String menuUrlStr = Util.rootUrl + "/menu";
     private static String orderUrlStr = Util.rootUrl + "/order";
+
+    private static URL menuUrl = null;
+    private static URL orderURL = null;
 
     // JSON Node names
     private static final String TAG_MENU = "menuItems";
@@ -58,6 +59,7 @@ public class MenuActivity extends ListActivity {
     private static final String TAG_NAME = "name";
     private static final String TAG_PRICE = "price";
     private static final String TAG_CUISINE = "cuisine";
+    private static final String TAG_RESTAURANT = "restaurant";
 
     // restaurants JSONArray & orders JSONArray
     JSONArray menuArray = null;
@@ -171,6 +173,104 @@ public class MenuActivity extends ListActivity {
 
         @Override
         protected Void doInBackground(Void... arg0) {
+
+            String logPrefix = getClass().getEnclosingClass().getName();
+            HttpURLConnection urlConnection = null;
+            try {
+
+                menuUrl = new URL(menuUrlStr);
+                urlConnection = (HttpURLConnection) menuUrl.openConnection();
+                urlConnection.setDoInput(true);
+                urlConnection.setUseCaches(false);
+                urlConnection.setAllowUserInteraction(false);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestProperty("Accept", "application/json");
+                urlConnection.setChunkedStreamingMode(0);
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                StringBuffer sb = new StringBuffer();
+
+                // if there is a response code AND that response code is 200 OK, do
+                // stuff in the first if block
+                orderresponsecode = urlConnection.getResponseCode();
+                //
+                Log.d(logPrefix + " Order Response code ", orderresponsecode.toString());
+                //
+                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                    InputStream is = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    String inputLine = "";
+                    //
+                    while ((inputLine = br.readLine()) != null) {
+                        sb.append(inputLine);
+                    }
+                    String result = sb.toString();
+
+                    JSONObject jasonResultObject = new JSONObject(result);
+                    JSONArray jasonMenuList = jasonResultObject.getJSONArray(TAG_MENU);
+
+                    for(int n = 0; n < jasonMenuList.length(); n++)
+                    {
+                        JSONObject menuItemObject = jasonMenuList.getJSONObject(n);
+
+                        String restaurant = menuItemObject.getString(TAG_RESTAURANT);
+                        Log.d(logPrefix, extrarestaurantname);
+
+                        if (restaurant.equals(extrarestaurantname)) {
+                            // Restaurant JSON object
+                            String foodid = menuItemObject.getString(TAG_ID);
+                            String name = menuItemObject.getString(TAG_NAME);
+                            String price = menuItemObject.getString(TAG_PRICE);
+                            String cuisine = menuItemObject.getString(TAG_CUISINE);
+
+                            HashMap<String, String> menu_tmpmat = new HashMap<String, String>();
+
+                            // adding each child node to HashMap key => value
+                            menu_tmpmat.put(TAG_ID, foodid);
+                            menu_tmpmat.put(TAG_NAME, name);
+                            menu_tmpmat.put(TAG_PRICE, price);
+                            menu_tmpmat.put(TAG_CUISINE, cuisine);
+
+                            // adding menu_tmpmat to menulist list
+                            menulist.add(menu_tmpmat);
+
+                            Log.d(logPrefix, restaurant);
+                        }
+                    }
+
+
+                    // otherwise, if any other status code is returned, or no status
+                    // code is returned, do stuff in the else block
+                } else {
+                    InputStream is = new BufferedInputStream(urlConnection.getErrorStream());
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    String inputLine = "";
+                    //
+                    while ((inputLine = br.readLine()) != null) {
+                        sb.append(inputLine);
+                    }
+                    String result = sb.toString();
+                    Log.d(logPrefix, result);
+
+                    // Server returned HTTP error code description.
+                    Log.w(logPrefix, "" + urlConnection.getResponseMessage());
+                }
+
+            } catch (MalformedURLException exception) {
+                Log.e(logPrefix, exception.toString());
+            } catch (IOException exception) {
+                Log.e(logPrefix, exception.toString());
+            } catch (JSONException exception) {
+                Log.e(logPrefix, exception.toString());
+            } finally {
+                if (urlConnection != null ) {
+                    urlConnection.disconnect();
+                }
+            }
+            return null;
+/*
             // Creating service handler class instance
             ServiceHandler sh = new ServiceHandler();
 
@@ -214,7 +314,7 @@ public class MenuActivity extends ListActivity {
             } else {
                 Log.e("ServiceHandler", "Couldn't get any data from the url");
             }
-            return null;
+            return null;*/
         }
 
         @Override
@@ -281,25 +381,11 @@ public class MenuActivity extends ListActivity {
 
                 writer.flush();
                 writer.close();
-                //
-                Log.d("flags", "flag2");
-                //
+
                 StringBuffer sb = new StringBuffer();
-                //
-                Log.d("flags", "flag2.1");
-                //
                 InputStream is = new BufferedInputStream(urlConnection.getInputStream());
-                //
-                Log.d("flags", "flag2.2");
-                //
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                //
-                Log.d("flags", "flag2.3");
-                //
                 String inputLine = "";
-                //
-                Log.d("flags", "flag3");
-                //
                 while ((inputLine = br.readLine()) != null) {
                     sb.append(inputLine);
                 }
