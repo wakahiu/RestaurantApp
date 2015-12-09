@@ -35,6 +35,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class menuactivity extends ListActivity {
+    // initialize bundle that will be sent to the basket
+    Bundle passthis2basket = new Bundle();
+
     // fab initialization
     FloatingActionButton fab, fab2goback; // floating action button
     // Progress dialog
@@ -61,20 +64,32 @@ public class menuactivity extends ListActivity {
     // orderresponsecode initialization
     Integer orderresponsecode;
     // String Initialization
-    String chosenfoodname,chosenfoodprice, chosenfoodid, extrarestaurantID;
+    String chosenfoodname,chosenfoodprice, chosenfoodid, extrarestaurantID,extrarestaurantname, orderId, jtxt;
+    // TextView
+    TextView menumaintitle;
+    // Intent
+    Intent menu2sbasketintent;
+    // int
+    int j = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menulistlayout);
-
+        // new intent for going over to sbasket
+        menu2sbasketintent = new Intent(getApplicationContext(), shoppingbasketactivity.class);
         // pull things from Intent that had putExtra
         Intent fromrestaurantintent = this.getIntent();
         // get the value of key from intent's extra
         if (fromrestaurantintent != null){
                 extrarestaurantID = getIntent().getStringExtra("chosenrestaurantID"); // chosenrestaurant is the name of the restaurant chosen by the user
-            Log.d("extra rest name", extrarestaurantID);
+                extrarestaurantname = getIntent().getStringExtra("chosenrestaurant");
+            Log.d("extra resta ID", extrarestaurantID);
+            Log.d("extra resta name",extrarestaurantname);
         }
+        // find menu title
+        menumaintitle = (TextView)findViewById(R.id.mainmenutitle);
+        menumaintitle.setText(extrarestaurantname);
 
         // find the fab in the layout
         fab = (FloatingActionButton)findViewById(R.id.fab);
@@ -84,8 +99,8 @@ public class menuactivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
-                startActivity(sbasketintent);
+                startActivity(menu2sbasketintent);
+                j = 1;
                 finish();
             }
         });
@@ -361,10 +376,24 @@ public class menuactivity extends ListActivity {
                 // stuff in the first if block
                 orderresponsecode = urlConnection.getResponseCode();
                 //
+
+
+
+                //
                 Log.d("orderresponsecode",orderresponsecode.toString());
                 Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
-                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                //
+
+                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
                     // OK
+                    JSONObject jasonResultObject = new JSONObject(result);
+                    JSONObject jasonOrderObject = jasonResultObject.getJSONObject("order");
+
+                    orderId = jasonOrderObject.getString("_id");
+
+                    // log order ID for debugging
+                    Log.d("order ID", orderId);
+
                     Log.d(logPrefix, urlConnection.getResponseMessage());
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
@@ -392,7 +421,16 @@ public class menuactivity extends ListActivity {
             super.onPostExecute(result);
 
             if  (orderresponsecode.equals(201)) {
-                Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
+                passthis2basket.putString("chosenorderID"+j,orderId);
+                jtxt = String.valueOf(j);
+                passthis2basket.putString("jvalue", jtxt);
+                menu2sbasketintent.putExtras(passthis2basket);
+                //
+                Log.d("passthis2basket",passthis2basket.toString());
+                //
+                Toast.makeText(menuactivity.this, j + " order(s) added in total", Toast.LENGTH_LONG).show();
+                j = j + 1;
+
                 //GetUserID().execute();
             } else {
                 Toast.makeText(menuactivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();

@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 public class shoppingbasketactivity extends ListActivity {
     // initialize bundle that will be sent to the basket
-    Bundle passthisback2menu = new Bundle();
+    //Bundle passthisback2menu = new Bundle();
 
     // progress dialog is initiated while fetching data from server
     private ProgressDialog pDialog;
@@ -85,7 +85,7 @@ public class shoppingbasketactivity extends ListActivity {
             //restaurant4menu = getIntent().getStringExtra("restaurantname2basket");
         }
         // put the restaurant name into bundle so can be put as Extra when cancel is pressed.
-        passthisback2menu.putString("chosenrestaurant", restaurant4menu);
+        //passthisback2menu.putString("chosenrestaurant", restaurant4menu);
 
         new GetShoppingBasket().execute();
 
