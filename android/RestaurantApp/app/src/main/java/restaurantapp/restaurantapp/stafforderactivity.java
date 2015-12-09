@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StaffOrderActivity extends ListActivity {
+public class stafforderactivity extends ListActivity {
     // progress dialog is initiated while fetching data from server
     private ProgressDialog pDialog;
 
@@ -67,7 +67,7 @@ public class StaffOrderActivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog as data is fetched
-            pDialog = new ProgressDialog(StaffOrderActivity.this);
+            pDialog = new ProgressDialog(stafforderactivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -156,7 +156,7 @@ public class StaffOrderActivity extends ListActivity {
                 pDialog.dismiss();
             // Updating parsed JSON data into ListView
             ListAdapter adapter = new SimpleAdapter(
-                    StaffOrderActivity.this, sbasketlist,
+                    stafforderactivity.this, sbasketlist,
 
                     R.layout.stafforderlistlayout, new String[]{"name", "price"},
 
