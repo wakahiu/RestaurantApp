@@ -156,7 +156,8 @@ public class shoppingbasketactivity extends ListActivity {
             Log.e("Response: ", "> " + jsonStr);
 
             // change counterlimit to int
-            counterint = Integer.parseInt(counterlimit);
+            if ( counterlimit != null )
+                counterint = Integer.parseInt(counterlimit);
             //
             Log.d("counterint", String.valueOf(counterint));
             //

@@ -39,6 +39,7 @@ public class restaurantactivity extends ListActivity {
     JSONArray restaurants = null;
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> restaurantlist;
+    ArrayList<String> stringArrayList;
     // String
     String extra1,chosenrestaurantname;
 
@@ -54,6 +55,7 @@ public class restaurantactivity extends ListActivity {
         }
         //components for testing purposes
         restaurantlist = new ArrayList<HashMap<String, String>>();
+        stringArrayList = new ArrayList<>();
         ListView lv = getListView();
 
         // Listview on item click listener
@@ -62,12 +64,16 @@ public class restaurantactivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 chosenrestaurantname = ((TextView) view.findViewById(R.id.name))
                         .getText().toString();
+
+                passthis2menu.putStringArrayList("RestaurantIDList", stringArrayList);
                 //
                 Log.d("chosenrestaurantname",chosenrestaurantname);
+                Log.d("position",""+position);
                 //
-                passthis2menu.putString("chosenrestaurant",chosenrestaurantname);
+                passthis2menu.putString("chosenrestaurant", chosenrestaurantname);
+                passthis2menu.putString("chosenrestaurantID", stringArrayList.get(position));
                 Log.d("resta name",chosenrestaurantname);
-                Intent restaurant2menuintent = new Intent(getApplicationContext(), MenuActivity.class);
+                Intent restaurant2menuintent = new Intent(getApplicationContext(), menuactivity.class);
                 restaurant2menuintent.putExtras(passthis2menu);
                 startActivity(restaurant2menuintent);
                 finish();
@@ -100,8 +106,6 @@ public class restaurantactivity extends ListActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
 
-            Log.d("Response: ", "> " + jsonStr);
-
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -128,7 +132,9 @@ public class restaurantactivity extends ListActivity {
                         user_tmpmat.put(TAG_NAME, restaurantname);
                         user_tmpmat.put(TAG_ADDRESS, address);
                         user_tmpmat.put(TAG_CITY, city);
-                        user_tmpmat.put(TAG_CUISINE,cuisine);
+                        user_tmpmat.put(TAG_CUISINE, cuisine);
+
+                        stringArrayList.add(restaurantid);
 
                         // adding user_tmpmat to testuserlist list
                         restaurantlist.add(user_tmpmat);

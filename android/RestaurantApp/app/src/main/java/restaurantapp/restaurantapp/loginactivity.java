@@ -28,6 +28,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -44,7 +47,7 @@ public class loginactivity extends Activity {
     Button login,registerbutton,loginBypass, loginStaff;
     String emailtxt,passwordtxt, isStafftxt;
     Integer responsecode;
-    Boolean isStaff;
+//    Boolean isStaff;
     TextView loginmaintitle;
 
     private static final String TAG_EMAIL = "email";
@@ -69,8 +72,8 @@ public class loginactivity extends Activity {
         registerbutton.setTypeface(loginfont);
         loginBypass = (Button)findViewById(R.id.loginBypass);
         loginBypass.setTypeface(loginfont);
-        loginStaff = ( Button ) findViewById( R.id.loginStaff );
-        loginStaff.setTypeface(loginfont);
+//        loginStaff = ( Button ) findViewById( R.id.loginStaff );
+//        loginStaff.setTypeface(loginfont);
 
         // Start an intent for the GCM Registration. This generates tokens in the background.
         // GCM ensures that orders and invoices are received continuously the background.
@@ -87,8 +90,8 @@ public class loginactivity extends Activity {
                 password.setTypeface(loginfont);
                 emailtxt = email.getText().toString().toLowerCase();
                 passwordtxt = password.getText().toString();
-                isStaff = false;
-                isStafftxt = isStaff.toString();
+//                isStaff = false;
+//                isStafftxt = isStaff.toString();
 
                 Log.e("emailtxt3",emailtxt);
                 Log.e("passwordtxt3",passwordtxt);
@@ -108,23 +111,23 @@ public class loginactivity extends Activity {
             }
         });
 
-        loginStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // User input texts
-                email = (EditText)findViewById(R.id.email);
-                password = (EditText)findViewById(R.id.password);
-                emailtxt = email.getText().toString().toLowerCase();
-                passwordtxt = password.getText().toString();
-                isStaff = true;
-                isStafftxt = isStaff.toString();
-
-                Log.e("emailtxt3",emailtxt);
-                Log.e("passwordtxt3",passwordtxt);
-
-                new PostUserCredential().execute();
-            }
-        });
+//        loginStaff.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // User input texts
+//                email = (EditText)findViewById(R.id.email);
+//                password = (EditText)findViewById(R.id.password);
+//                emailtxt = email.getText().toString().toLowerCase();
+//                passwordtxt = password.getText().toString();
+//                isStaff = true;
+//                isStafftxt = isStaff.toString();
+//
+//                Log.e("emailtxt3",emailtxt);
+//                Log.e("passwordtxt3",passwordtxt);
+//
+//                new PostUserCredential().execute();
+//            }
+//        });
 
         // Check to see whether a network connection is available
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -180,7 +183,38 @@ public class loginactivity extends Activity {
                 HttpResponse response = httpClient.execute(httpPost);
                 HttpEntity httpEntity = response.getEntity();
                 responsecode = response.getStatusLine().getStatusCode();
+
+                ServiceHandler sh = new ServiceHandler();
+                String jsonStr = sh.makeServiceCall("http://dinnermate.azurewebsites.net/api/v1.0/user", ServiceHandler.GET, nameValuePairs);
+
+                Log.d("getResponse: ", ">\n" + jsonStr);
+
+                if (jsonStr != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(jsonStr);
+
+                        // Getting JSON Array node
+                        JSONArray userArray = jsonObj.getJSONArray("users");
+
+                        // looping through All users
+                        for (int i = 0; i < userArray.length(); i++) {
+                            JSONObject user = userArray.getJSONObject(i);
+                            if ( user.getString("email").equals( emailtxt ) ) {
+                                isStafftxt = user.getString("staff");
+                                Log.e("isStafftxtyo:", isStafftxt);
+                            } // end if
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+
+
+
                 // Log the results for debugging  information
+                Log.e("respond: ", response.toString());
                 Log.e("httpEntity",httpEntity.toString());
                 Log.e("Status Code", responsecode.toString());
                 Log.d("email name", emailtxt);
@@ -199,7 +233,7 @@ public class loginactivity extends Activity {
             } catch (IOException err) {
                 // writing exception to log
                 err.printStackTrace();
-                Log.e("IO Exception",err.toString());
+                Log.e("IO Exception", err.toString());
             }
 
             return null;
@@ -212,18 +246,18 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
-               // if ( isstfftxt.equals("false ) {
+                if ( isStafftxt.equals("false") ) {
                     Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
                     passthis2restaurant.putString("currentuseremail",emailtxt);
                     forward2restaurantintent.putExtras(passthis2restaurant);
                     startActivity(forward2restaurantintent);
                     finish();
-                /*} else {
+                } else {
                     Intent forward2stafforderintent = new Intent(loginactivity.this, stafforderactivity.class);
                     forward2stafforderintent.putExtra( "email", emailtxt );
                     startActivity( forward2stafforderintent );
                     finish();
-                }*/
+                }
             } else {
                 Toast.makeText(loginactivity.this, "Failed login. Please try again!",Toast.LENGTH_LONG).show();
             }

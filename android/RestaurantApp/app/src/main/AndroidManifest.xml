@@ -60,7 +60,7 @@
             android:label="sbasketmode">
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:name=".menuactivity"
             android:label="menumode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -2,9 +2,12 @@ package restaurantapp.restaurantapp;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
@@ -19,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StaffOrderActivity extends ListActivity {
+public class stafforderactivity extends ListActivity {
     // progress dialog is initiated while fetching data from server
     private ProgressDialog pDialog;
 
@@ -46,7 +49,7 @@ public class StaffOrderActivity extends ListActivity {
 
     String emailtxt;
 
-    Button procedded;
+    FloatingActionButton staffback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,15 @@ public class StaffOrderActivity extends ListActivity {
         emailtxt = getIntent().getExtras().getString("email");
         new GetShoppingBasket().execute();
 
+        staffback = (FloatingActionButton)findViewById(R.id.staffback);
+        staffback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent backtologinintent = new Intent(stafforderactivity.this, loginactivity.class);
+                startActivity(backtologinintent);
+                finish();
+            }
+        });
     }
 
     /**
@@ -67,7 +79,7 @@ public class StaffOrderActivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog as data is fetched
-            pDialog = new ProgressDialog(StaffOrderActivity.this);
+            pDialog = new ProgressDialog(stafforderactivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -155,8 +167,11 @@ public class StaffOrderActivity extends ListActivity {
             if (pDialog.isShowing())
                 pDialog.dismiss();
             // Updating parsed JSON data into ListView
+
+
+
             ListAdapter adapter = new SimpleAdapter(
-                    StaffOrderActivity.this, sbasketlist,
+                    stafforderactivity.this, sbasketlist,
 
                     R.layout.stafforderlistlayout, new String[]{"name", "price"},
 
@@ -179,6 +194,7 @@ public class StaffOrderActivity extends ListActivity {
 
 
                     new int[]{R.id.foodname, R.id.foodprice}
+
             );
 //            procedded = (Button)findViewById(R.id.proceed_button);
 //
@@ -188,6 +204,8 @@ public class StaffOrderActivity extends ListActivity {
 //
 //                }
 //            });
+            // set on click action for fab2goback
+
 
             setListAdapter(adapter);
         }

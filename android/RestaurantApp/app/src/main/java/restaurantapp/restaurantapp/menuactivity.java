@@ -3,7 +3,6 @@ package restaurantapp.restaurantapp;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -36,16 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MenuActivity extends ListActivity {
-    // initialize bundle that will be sent to the basket
-    Bundle passthis2basket = new Bundle();
-
+public class menuactivity extends ListActivity {
     // fab initialization
     FloatingActionButton fab, fab2goback; // floating action button
-
     // Progress dialog
     private ProgressDialog pDialog; //progress dialog for testing purposes
-
     // server URL
     private static String menuUrlStr = Util.rootUrl + "/menu";
     private static String orderUrlStr = Util.rootUrl + "/order";
@@ -63,73 +56,48 @@ public class MenuActivity extends ListActivity {
 
     // restaurants JSONArray & orders JSONArray
     JSONArray menuArray = null;
-
     // Hashmap for ListView
     ArrayList<HashMap<String, String>> menulist;
-
     // orderresponsecode initialization
     Integer orderresponsecode;
-
     // String Initialization
-    String chosenfoodname,chosenfoodprice, chosenfoodid, extrarestaurantname, orderId, jtxt;
-
-    // TextView
-    TextView menumaintitle;
-
-    // int
-    int j  = 1;
-
-    //Intent
-    Intent menu2sbasketintent;
+    String chosenfoodname,chosenfoodprice, chosenfoodid, extrarestaurantID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        menu2sbasketintent = new Intent(getApplicationContext(), shoppingbasketactivity.class);
-        // set the layout i want to see
         setContentView(R.layout.menulistlayout);
 
         // pull things from Intent that had putExtra
         Intent fromrestaurantintent = this.getIntent();
         // get the value of key from intent's extra
         if (fromrestaurantintent != null){
-            extrarestaurantname = getIntent().getStringExtra("chosenrestaurant"); // chosenrestaurant is the name of the restaurant chosen by the user
-        //    Log.d("extra rest name", extrarestaurantname);
+                extrarestaurantID = getIntent().getStringExtra("chosenrestaurantID"); // chosenrestaurant is the name of the restaurant chosen by the user
+            Log.d("extra rest name", extrarestaurantID);
         }
-
-        // intialize font
-        final Typeface menufont = Typeface.createFromAsset(getAssets(),"txtfont1.ttf");
 
         // find the fab in the layout
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab2goback = (FloatingActionButton)findViewById(R.id.fab2goback);
-        // find the textview
-        menumaintitle = (TextView)findViewById(R.id.mainmenutitle);
-        menumaintitle.setTypeface(menufont);
 
         // set on click action for fab
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
-                startActivity(menu2sbasketintent);
-                j = 1;
-
+                Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
+                startActivity(sbasketintent);
+                finish();
             }
         });
         // set on click action for fab2goback
         fab2goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent backtorestaurantintent = new Intent(MenuActivity.this, restaurantactivity.class);
+                Intent backtorestaurantintent = new Intent(menuactivity.this, restaurantactivity.class);
                 startActivity(backtorestaurantintent);
                 finish();
             }
         });
-
-        // set textview title using the restaurant name sent from restaurant activity
-        menumaintitle.setText(extrarestaurantname);
 
         //initialize menu list and get list view
         menulist = new ArrayList<HashMap<String, String>>();
@@ -147,10 +115,8 @@ public class MenuActivity extends ListActivity {
                         .getText().toString();
                 chosenfoodid = ((TextView) view.findViewById(R.id.foodid))
                         .getText().toString();
-                new PostOrders().execute();
-                //Intent mServiceIntent = new Intent(getActivity(), GCMRegistrationIntentService.class);
-                //getActivity().startService(mServiceIntent);
 
+                new PostOrders().execute();
             }
         });
 
@@ -165,7 +131,7 @@ public class MenuActivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(MenuActivity.this);
+            pDialog = new ProgressDialog(menuactivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -216,9 +182,9 @@ public class MenuActivity extends ListActivity {
                         JSONObject menuItemObject = jasonMenuList.getJSONObject(n);
 
                         String restaurant = menuItemObject.getString(TAG_RESTAURANT);
-                        Log.d(logPrefix, extrarestaurantname);
+                        Log.d(logPrefix, extrarestaurantID);
 
-                        if (restaurant.equals(extrarestaurantname)) {
+                        if (restaurant.equals(extrarestaurantID)) {
                             // Restaurant JSON object
                             String foodid = menuItemObject.getString(TAG_ID);
                             String name = menuItemObject.getString(TAG_NAME);
@@ -277,6 +243,8 @@ public class MenuActivity extends ListActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
 
+            Log.d("Response: ", ">\n" + jsonStr);
+
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -294,9 +262,7 @@ public class MenuActivity extends ListActivity {
                         String price = user.getString(TAG_PRICE);
                         String cuisine = user.getString(TAG_CUISINE);
 
-                        Log.d("foodid",foodid);
                         // tmp hashmap for single restaurant
-
                         HashMap<String, String> menu_tmpmat = new HashMap<String, String>();
 
                         // adding each child node to HashMap key => value
@@ -325,7 +291,7 @@ public class MenuActivity extends ListActivity {
                 pDialog.dismiss();
             /** Updating parsed JSON data into ListView **/
             ListAdapter adapter = new SimpleAdapter(
-                    MenuActivity.this, menulist,
+                    menuactivity.this, menulist,
 
                     R.layout.menuitemlist, new String[] { TAG_NAME, TAG_PRICE, TAG_CUISINE, TAG_ID },
                     new int[] { R.id.foodname, R.id.foodprice, R.id.cuisine, R.id.foodid}
@@ -356,6 +322,7 @@ public class MenuActivity extends ListActivity {
                 List<String> menuItemIdList = new ArrayList<String>();
                 menuItemIdList.add(chosenfoodid);
                 jsonObj.put("menuItemIdList", new JSONArray(menuItemIdList));
+                Log.d(logPrefix, jsonObj.toString());
 
                 orderURL = new URL(orderUrlStr);
                 urlConnection = (HttpURLConnection) orderURL.openConnection();
@@ -369,9 +336,7 @@ public class MenuActivity extends ListActivity {
                 urlConnection.setChunkedStreamingMode(0);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.connect();
-                //
-                Log.d("flags", "flag1");
-                //
+
                 // instantiate OutputStreamWriter using the output stream, returned
                 // from getOutputStream, that writes to this connection.
                 OutputStreamWriter writer = new OutputStreamWriter(
@@ -390,30 +355,22 @@ public class MenuActivity extends ListActivity {
                     sb.append(inputLine);
                 }
                 String result = sb.toString();
-
+                Log.d("Order result",result);
 
                 // if there is a response code AND that response code is 200 OK, do
                 // stuff in the first if block
                 orderresponsecode = urlConnection.getResponseCode();
                 //
-                Log.d("orderresponsecode", orderresponsecode.toString());
-                //
-                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
-
+                Log.d("orderresponsecode",orderresponsecode.toString());
+                Log.d(getClass().getEnclosingClass().getName(), urlConnection.getResponseMessage());
+                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     // OK
-                    JSONObject jasonResultObject = new JSONObject(result);
-                    JSONObject jasonOrderObject = jasonResultObject.getJSONObject("order");
-
-                    orderId = jasonOrderObject.getString("_id");
-
-                    // log order ID for debugging
-                    Log.d("order ID", orderId);
-
+                    Log.d(logPrefix, urlConnection.getResponseMessage());
                     // otherwise, if any other status code is returned, or no status
                     // code is returned, do stuff in the else block
                 } else {
-                    // Server returned HTTP error code description.
-                    Log.w(logPrefix, "" + urlConnection.getResponseMessage());
+                    // Server returned HTTP error code.
+                    Log.w(logPrefix, "" + urlConnection.getResponseCode());
                 }
 
             } catch (MalformedURLException exception) {
@@ -435,25 +392,100 @@ public class MenuActivity extends ListActivity {
             super.onPostExecute(result);
 
             if  (orderresponsecode.equals(201)) {
-
-                //passthis2basket.putString("restaurantname2basket",extrarestaurantname);
-                passthis2basket.putString("chosenorderID"+j,orderId);
-                //
-                Log.d("passthis2basket",passthis2basket.toString());
-                //
-                jtxt = String.valueOf(j);
-                //
-                Log.d("jtxt", jtxt);
-                //
-                passthis2basket.putString("jvalue", jtxt);
-                menu2sbasketintent.putExtras(passthis2basket);
-
-                Toast.makeText(MenuActivity.this, j + " order(s) added in total", Toast.LENGTH_LONG).show();
-                j = j + 1;
-
+                Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
+                //GetUserID().execute();
             } else {
-                Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
+                Toast.makeText(menuactivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }
+    /*
+    private class GetUserID extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            // Creating service handler class instance
+            ServiceHandler sh = new ServiceHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
+
+            Log.e("GetUserID response: ", "> " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    Boolean compareresult = false;
+                    // initialize a JSONObject from the GET response entity
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    // search within found JSONObject to get the array with (specific name)
+                    orderIDArray = jsonObj.getJSONArray("orders");
+
+                    for (int i = 0; i < orderIDArray.length(); i++) {
+                        IDfoundObj = orderIDArray.getJSONObject(i);
+                        //
+                        Log.d("1stArray", orderIDArray.toString());
+                        //
+                        IDfoundObjtxt = IDfoundObj.get("_id").toString();
+                        //
+                        Log.d("1stArrayString", IDfoundObjtxt);
+                        Log.d("ArrayStringCompare", ID2look4);
+                        //
+                        if (IDfoundObjtxt.equals(ID2look4)) {
+                            compareresult = true;
+                            index = i;
+                        }
+                    }
+                    // if desired ID object is found
+                    if (compareresult.equals(true)) {
+                        IDorder = orderIDArray.getJSONObject(index);
+                        IDmenuitems = IDorder.getJSONArray("menuItems");
+                        //IDmenuitems = IDfoundObj.getJSONArray("menuItems");
+                        //
+                        Log.d("ID order Obj", IDorder.toString());
+                        Log.d("ID menuitem array", IDmenuitems.toString());
+                        //
+
+                        for (int j = 0; j < IDmenuitems.length(); j++) {
+                            JSONObject menuitemobjs = IDmenuitems.getJSONObject(j);
+                            //
+                            Log.d("menuItems Obj", menuitemobjs.toString());
+                            //
+                            oitemname = menuitemobjs.get("name").toString();
+                            oitemprice = menuitemobjs.get("price").toString();
+                            oitempriceint = menuitemobjs.getInt("price");
+                            //
+                            Log.d("oitemname",oitemname);
+                            Log.d("oitemprice",oitemprice);
+                            // add value to each key
+                            order_tmpmap.put("name", oitemname);
+                            order_tmpmap.put("price", oitemprice);
+                            oitempriceinttotal += oitempriceint;
+
+                            // add order_tmpmap to sbasket master list
+                            sbasketlist.add(order_tmpmap);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("ServiceHandler", "Couldn't get any data from the url");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            //
+        }
+    } // end the Asynctask of GetUserID
+    */
+
 }// end menuactivity
