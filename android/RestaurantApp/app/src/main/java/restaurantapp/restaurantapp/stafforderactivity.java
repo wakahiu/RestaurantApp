@@ -58,16 +58,6 @@ public class stafforderactivity extends ListActivity {
 
         emailtxt = getIntent().getExtras().getString("email");
         new GetShoppingBasket().execute();
-
-        staffback = (FloatingActionButton)findViewById(R.id.staffback);
-        staffback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent backtologinintent = new Intent(stafforderactivity.this, loginactivity.class);
-                startActivity(backtologinintent);
-                finish();
-            }
-        });
     }
 
     /**
