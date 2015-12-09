@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    android:paddingRight="15dp"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/staffordertitle"

@@ -60,7 +60,7 @@
             android:label="sbasketmode">
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:name=".menuactivity"
             android:label="menumode">
         </activity>
         <activity
