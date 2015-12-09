@@ -212,18 +212,18 @@ public class loginactivity extends Activity {
 
             if  (responsecode.equals(201)) {
                 Toast.makeText(loginactivity.this, "Login successful!",Toast.LENGTH_LONG).show();
-               // if ( isstfftxt.equals("false ) {
+                if ( isStafftxt.equals("false") ) {
                     Intent forward2restaurantintent = new Intent(loginactivity.this, restaurantactivity.class);
                     passthis2restaurant.putString("currentuseremail",emailtxt);
                     forward2restaurantintent.putExtras(passthis2restaurant);
                     startActivity(forward2restaurantintent);
                     finish();
-                /*} else {
+                } else {
                     Intent forward2stafforderintent = new Intent(loginactivity.this, stafforderactivity.class);
                     forward2stafforderintent.putExtra( "email", emailtxt );
                     startActivity( forward2stafforderintent );
                     finish();
-                }*/
+                }
             } else {
                 Toast.makeText(loginactivity.this, "Failed login. Please try again!",Toast.LENGTH_LONG).show();
             }
