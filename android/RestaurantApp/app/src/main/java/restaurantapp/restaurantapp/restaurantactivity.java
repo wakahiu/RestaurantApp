@@ -76,6 +76,7 @@ public class restaurantactivity extends ListActivity {
                 Log.d("resta name",chosenrestaurantname);
                 //
                 Intent restaurant2menuintent = new Intent(getApplicationContext(), menuactivity.class);
+
                 restaurant2menuintent.putExtras(passthis2menu);
                 //
                 Log.d("passthis2menu",passthis2menu.toString());

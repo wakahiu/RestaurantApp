@@ -58,16 +58,6 @@ public class stafforderactivity extends ListActivity {
 
         emailtxt = getIntent().getExtras().getString("email");
         new GetShoppingBasket().execute();
-
-        staffback = (FloatingActionButton)findViewById(R.id.staffback);
-        staffback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent backtologinintent = new Intent(stafforderactivity.this, loginactivity.class);
-                startActivity(backtologinintent);
-                finish();
-            }
-        });
     }
 
     /**
@@ -97,10 +87,9 @@ public class stafforderactivity extends ListActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET, nameValuePairs );
 
-            Log.e("Response: ", "> " + jsonStr);
-
             if (jsonStr != null) {
                 try {
+                    String logPrefix = getClass().getEnclosingClass().getName();
                     Boolean compareresult = false;
                     // initialize a JSONObject from the GET response entity
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -108,45 +97,21 @@ public class stafforderactivity extends ListActivity {
                     // search within found JSONObject to get the array with (specific name)
                     orderIDArray = jsonObj.getJSONArray("orders");
 
-                    for (int i = 0; i < orderIDArray.length(); i++) {
-                        IDfoundObj = orderIDArray.getJSONObject(i);
-                        //
-                        Log.d("1stArray", orderIDArray.toString());
-                        //
-                        IDfoundObjtxt = IDfoundObj.get("_id").toString();
-                        //
-                        Log.d("1stArrayString", IDfoundObjtxt);
-                        Log.d("ArrayStringCompare", ID2look4);
-                        //
-                        if (IDfoundObjtxt.equals(ID2look4)) {
-                            compareresult = true;
-                            index = i;
-                        }
-                    }
-                    // if desired ID object is found
-                    if (compareresult.equals(true)) {
-                        IDorder = orderIDArray.getJSONObject(index);
-                        IDmenuitems = IDorder.getJSONArray("menuItems");
-                        //IDmenuitems = IDfoundObj.getJSONArray("menuItems");
-                        //
-                        Log.d("ID order Obj", IDorder.toString());
-                        Log.d("ID menuitem array", IDmenuitems.toString());
-                        //
-                        for (int j = 0; j < IDmenuitems.length(); j++) {
-                            JSONObject menuitemobjs = IDmenuitems.getJSONObject(j);
-                            //
-                            Log.d("menuItems Obj", menuitemobjs.toString());
-                            //
-                            oitemname = menuitemobjs.get("name").toString();
-                            oitemprice = menuitemobjs.get("price").toString();
-                            //
-                            Log.d("oitemname",oitemname);
-                            Log.d("oitemprice",oitemprice);
-                            // add value to each key
+                    for(int n = 0; n < orderIDArray.length(); n++)
+                    {
+                        JSONObject orderObject = orderIDArray.getJSONObject(n);
+                        Log.d("orderObject: ", "> " + orderObject.toString());
+
+                        JSONArray menuItemsArray =  orderObject.getJSONArray("menuItems");
+                        Log.d("menuItemsArray: ", "> " + menuItemsArray.toString());
+                        for (int m = 0; m < menuItemsArray.length(); m++) {
+                            JSONObject menuItem = menuItemsArray.getJSONObject(m);
+                            String oitemname =  menuItem.getString("name");
+                            String oitemprice =  menuItem.getString("price");
+                            Log.d("oitemname: ", "> " + oitemname);
+                            Log.d("oitemprice: ", "> " + oitemprice);
                             order_tmpmap.put("name", oitemname);
                             order_tmpmap.put("price", oitemprice);
-
-                            // add order_tmpmap to sbasket master list
                             sbasketlist.add(order_tmpmap);
                         }
                     }
@@ -168,44 +133,13 @@ public class stafforderactivity extends ListActivity {
                 pDialog.dismiss();
             // Updating parsed JSON data into ListView
 
-
-
             ListAdapter adapter = new SimpleAdapter(
                     stafforderactivity.this, sbasketlist,
 
                     R.layout.stafforderlistlayout, new String[]{"name", "price"},
-
-
-//                    procedded.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            ordertotalcosttxt = ordertotalcost.getText().toString();
-//
-//                            if (ordertotalcosttxt.equals("0.00"))
-//                            {
-//                                Toast.makeText(shoppingbasketactivity.this, "Please add order!", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Intent purchaseintent = new Intent(shoppingbasketactivity.this, paymentactivity.class);
-//                                startActivity(purchaseintent);
-//                                finish();
-//                            }
-//                        }
-//                    });
-
-
                     new int[]{R.id.foodname, R.id.foodprice}
 
             );
-//            procedded = (Button)findViewById(R.id.proceed_button);
-//
-//            procedded.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-            // set on click action for fab2goback
-
 
             setListAdapter(adapter);
         }
