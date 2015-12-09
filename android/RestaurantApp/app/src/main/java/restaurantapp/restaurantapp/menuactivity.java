@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MenuActivity extends ListActivity {
+public class menuactivity extends ListActivity {
     // fab initialization
     FloatingActionButton fab, fab2goback; // floating action button
     // Progress dialog
@@ -84,7 +84,7 @@ public class MenuActivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sbasketintent = new Intent(MenuActivity.this, shoppingbasketactivity.class);
+                Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
                 startActivity(sbasketintent);
                 finish();
             }
@@ -93,7 +93,7 @@ public class MenuActivity extends ListActivity {
         fab2goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent backtorestaurantintent = new Intent(MenuActivity.this, restaurantactivity.class);
+                Intent backtorestaurantintent = new Intent(menuactivity.this, restaurantactivity.class);
                 startActivity(backtorestaurantintent);
                 finish();
             }
@@ -131,7 +131,7 @@ public class MenuActivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(MenuActivity.this);
+            pDialog = new ProgressDialog(menuactivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -246,7 +246,7 @@ public class MenuActivity extends ListActivity {
                 pDialog.dismiss();
             /** Updating parsed JSON data into ListView **/
             ListAdapter adapter = new SimpleAdapter(
-                    MenuActivity.this, menulist,
+                    menuactivity.this, menulist,
 
                     R.layout.menuitemlist, new String[] { TAG_NAME, TAG_PRICE, TAG_CUISINE, TAG_ID },
                     new int[] { R.id.foodname, R.id.foodprice, R.id.cuisine, R.id.foodid}
@@ -347,10 +347,10 @@ public class MenuActivity extends ListActivity {
             super.onPostExecute(result);
 
             if  (orderresponsecode.equals(201)) {
-                Toast.makeText(MenuActivity.this, "Order added", Toast.LENGTH_LONG).show();
+                Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
                 //GetUserID().execute();
             } else {
-                Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
+                Toast.makeText(menuactivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }
