@@ -53,7 +53,7 @@ public class stafforderactivity extends ListActivity {
 
     String emailtxt;
 
-    FloatingActionButton staffback;
+//    FloatingActionButton staffback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,15 +63,15 @@ public class stafforderactivity extends ListActivity {
         emailtxt = getIntent().getExtras().getString("email");
         new GetShoppingBasket().execute();
 
-        staffback = (FloatingActionButton)findViewById(R.id.staffback);
-        staffback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent backtologinintent = new Intent(stafforderactivity.this, loginactivity.class);
-                startActivity(backtologinintent);
-                finish();
-            }
-        });
+//        staffback = (FloatingActionButton)findViewById(R.id.staffback);
+//        staffback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent backtologinintent = new Intent(stafforderactivity.this, loginactivity.class);
+//                startActivity(backtologinintent);
+//                finish();
+//            }
+//        });
     }
 
     /**
@@ -160,7 +160,6 @@ public class stafforderactivity extends ListActivity {
                                 order_tmpmap.put("name", oitemname);
                                 order_tmpmap.put("price", oitemprice);
                                 // refresh total price of the order
-
                                 // add order_tmpmap to sbasket master list
                                 sbasketlist.add(order_tmpmap);
                                 //
