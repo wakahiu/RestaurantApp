@@ -60,13 +60,8 @@
             android:label="sbasketmode">
         </activity>
         <activity
-            android:name=".menuactivity"
+            android:name=".MenuActivity"
             android:label="menumode">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.accounts.AccountAuthenticator" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".restaurantactivity"

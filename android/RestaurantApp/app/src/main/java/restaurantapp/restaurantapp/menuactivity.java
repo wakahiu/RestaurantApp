@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class menuactivity extends ListActivity {
+public class MenuActivity extends ListActivity {
     // fab initialization
     FloatingActionButton fab, fab2goback; // floating action button
     // Progress dialog
@@ -84,7 +84,7 @@ public class menuactivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sbasketintent = new Intent(menuactivity.this, shoppingbasketactivity.class);
+                Intent sbasketintent = new Intent(MenuActivity.this, shoppingbasketactivity.class);
                 startActivity(sbasketintent);
                 finish();
             }
@@ -93,7 +93,7 @@ public class menuactivity extends ListActivity {
         fab2goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent backtorestaurantintent = new Intent(menuactivity.this, restaurantactivity.class);
+                Intent backtorestaurantintent = new Intent(MenuActivity.this, restaurantactivity.class);
                 startActivity(backtorestaurantintent);
                 finish();
             }
@@ -131,7 +131,7 @@ public class menuactivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(menuactivity.this);
+            pDialog = new ProgressDialog(MenuActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -236,51 +236,6 @@ public class menuactivity extends ListActivity {
                 }
             }
             return null;
-/*
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
-
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-
-            Log.d("Response: ", ">\n" + jsonStr);
-
-            if (jsonStr != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
-
-                    // Getting JSON Array node
-                    menuArray = jsonObj.getJSONArray(TAG_MENU);
-
-                    // looping through All users
-                    for (int i = 0; i < menuArray.length(); i++) {
-                        JSONObject user = menuArray.getJSONObject(i);
-
-                        // Restaurant JSON object
-                        String foodid = user.getString(TAG_ID);
-                        String name = user.getString(TAG_NAME);
-                        String price = user.getString(TAG_PRICE);
-                        String cuisine = user.getString(TAG_CUISINE);
-
-                        // tmp hashmap for single restaurant
-                        HashMap<String, String> menu_tmpmat = new HashMap<String, String>();
-
-                        // adding each child node to HashMap key => value
-                        menu_tmpmat.put(TAG_ID, foodid);
-                        menu_tmpmat.put(TAG_NAME, name);
-                        menu_tmpmat.put(TAG_PRICE, price);
-                        menu_tmpmat.put(TAG_CUISINE,cuisine);
-
-                        // adding menu_tmpmat to menulist list
-                        menulist.add(menu_tmpmat);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Log.e("ServiceHandler", "Couldn't get any data from the url");
-            }
-            return null;*/
         }
 
         @Override
@@ -291,7 +246,7 @@ public class menuactivity extends ListActivity {
                 pDialog.dismiss();
             /** Updating parsed JSON data into ListView **/
             ListAdapter adapter = new SimpleAdapter(
-                    menuactivity.this, menulist,
+                    MenuActivity.this, menulist,
 
                     R.layout.menuitemlist, new String[] { TAG_NAME, TAG_PRICE, TAG_CUISINE, TAG_ID },
                     new int[] { R.id.foodname, R.id.foodprice, R.id.cuisine, R.id.foodid}
@@ -392,100 +347,12 @@ public class menuactivity extends ListActivity {
             super.onPostExecute(result);
 
             if  (orderresponsecode.equals(201)) {
-                Toast.makeText(menuactivity.this, "Order added", Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, "Order added", Toast.LENGTH_LONG).show();
                 //GetUserID().execute();
             } else {
-                Toast.makeText(menuactivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, "Oh no! Order did not go through! Please try again!",Toast.LENGTH_LONG).show();
             }
         }
     }
-    /*
-    private class GetUserID extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
-
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-
-            Log.e("GetUserID response: ", "> " + jsonStr);
-
-            if (jsonStr != null) {
-                try {
-                    Boolean compareresult = false;
-                    // initialize a JSONObject from the GET response entity
-                    JSONObject jsonObj = new JSONObject(jsonStr);
-
-                    // search within found JSONObject to get the array with (specific name)
-                    orderIDArray = jsonObj.getJSONArray("orders");
-
-                    for (int i = 0; i < orderIDArray.length(); i++) {
-                        IDfoundObj = orderIDArray.getJSONObject(i);
-                        //
-                        Log.d("1stArray", orderIDArray.toString());
-                        //
-                        IDfoundObjtxt = IDfoundObj.get("_id").toString();
-                        //
-                        Log.d("1stArrayString", IDfoundObjtxt);
-                        Log.d("ArrayStringCompare", ID2look4);
-                        //
-                        if (IDfoundObjtxt.equals(ID2look4)) {
-                            compareresult = true;
-                            index = i;
-                        }
-                    }
-                    // if desired ID object is found
-                    if (compareresult.equals(true)) {
-                        IDorder = orderIDArray.getJSONObject(index);
-                        IDmenuitems = IDorder.getJSONArray("menuItems");
-                        //IDmenuitems = IDfoundObj.getJSONArray("menuItems");
-                        //
-                        Log.d("ID order Obj", IDorder.toString());
-                        Log.d("ID menuitem array", IDmenuitems.toString());
-                        //
-
-                        for (int j = 0; j < IDmenuitems.length(); j++) {
-                            JSONObject menuitemobjs = IDmenuitems.getJSONObject(j);
-                            //
-                            Log.d("menuItems Obj", menuitemobjs.toString());
-                            //
-                            oitemname = menuitemobjs.get("name").toString();
-                            oitemprice = menuitemobjs.get("price").toString();
-                            oitempriceint = menuitemobjs.getInt("price");
-                            //
-                            Log.d("oitemname",oitemname);
-                            Log.d("oitemprice",oitemprice);
-                            // add value to each key
-                            order_tmpmap.put("name", oitemname);
-                            order_tmpmap.put("price", oitemprice);
-                            oitempriceinttotal += oitempriceint;
-
-                            // add order_tmpmap to sbasket master list
-                            sbasketlist.add(order_tmpmap);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Log.e("ServiceHandler", "Couldn't get any data from the url");
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            //
-        }
-    } // end the Asynctask of GetUserID
-    */
 
 }// end menuactivity
